@@ -9,7 +9,7 @@ TripleProcessPool, and QuadProcessPool are defined here
 
 ## Classes
 - [**DualProcessPool**](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md): Fixed-size process pool. This pool can spawn up to 2 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md#fields-table) = `<_abc_data object at 0x7f79eb986870>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md#fields-table) = `<_abc_data object at 0x7f10d06ef8d0>`
     - [broken](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md#properties-table); _getter_
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md#properties-table); _getter_
     - [closed](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md#properties-table); _getter_
@@ -77,7 +77,7 @@ TripleProcessPool, and QuadProcessPool are defined here
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/pool/processpool/class-DualProcessPool.md#_update_future): No docstring.
 - [**ProcessPool**](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md): The ProcessPool class for parallelism.
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md#fields-table) = `<_abc_data object at 0x7f79eb978fc0>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md#fields-table) = `<_abc_data object at 0x7f10d06ef060>`
     - [broken](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md#properties-table); _getter_
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md#properties-table); _getter_
     - [closed](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md#properties-table); _getter_
@@ -145,7 +145,7 @@ TripleProcessPool, and QuadProcessPool are defined here
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md#_update_future): No docstring.
 - [**QuadProcessPool**](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md): Fixed-size process pool. This pool can spawn up to 4 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md#fields-table) = `<_abc_data object at 0x7f79eb9869f0>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md#fields-table) = `<_abc_data object at 0x7f10d06efa50>`
     - [broken](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md#properties-table); _getter_
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md#properties-table); _getter_
     - [closed](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md#properties-table); _getter_
@@ -213,7 +213,7 @@ TripleProcessPool, and QuadProcessPool are defined here
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/pool/processpool/class-QuadProcessPool.md#_update_future): No docstring.
 - [**SingleProcessPool**](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md): Fixed-size process pool. This pool can spawn only 1 worker
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md#fields-table) = `<_abc_data object at 0x7f79eb986540>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md#fields-table) = `<_abc_data object at 0x7f10d06ef5d0>`
     - [broken](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md#properties-table); _getter_
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md#properties-table); _getter_
     - [closed](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md#properties-table); _getter_
@@ -281,7 +281,7 @@ TripleProcessPool, and QuadProcessPool are defined here
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/pool/processpool/class-SingleProcessPool.md#_update_future): No docstring.
 - [**TripleProcessPool**](/docs/api/modules/asyncpal/pool/processpool/class-TripleProcessPool.md): Fixed-size process pool. This pool can spawn up to 3 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-TripleProcessPool.md#fields-table) = `<_abc_data object at 0x7f79eb986930>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/processpool/class-TripleProcessPool.md#fields-table) = `<_abc_data object at 0x7f10d06ef990>`
     - [broken](/docs/api/modules/asyncpal/pool/processpool/class-TripleProcessPool.md#properties-table); _getter_
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/processpool/class-TripleProcessPool.md#properties-table); _getter_
     - [closed](/docs/api/modules/asyncpal/pool/processpool/class-TripleProcessPool.md#properties-table); _getter_
