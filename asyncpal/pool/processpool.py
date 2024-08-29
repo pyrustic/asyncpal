@@ -9,7 +9,9 @@ from asyncpal.future import Status
 from asyncpal.worker.processworker import ProcessWorker, MessageTag
 from asyncpal.pool import Pool, WorkerType, IDLE_TIMEOUT, MP_CONTEXT, WINDOWS_MAX_PROCESS_WORKERS
 
-__all__ = []
+
+__all__ = ["ProcessPool", "SingleProcessPool", "DualProcessPool",
+           "TripleProcessPool", "QuadProcessPool"]
 
 
 class ProcessPool(Pool):

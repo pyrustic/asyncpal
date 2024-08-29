@@ -122,7 +122,7 @@ The table below outlines exceptions that may occur.
 | --- | --- |
 | TimeoutError | raised when timeout expires |
 | CancelledError | raised when a task got cancelled |
-| Exception | any remote exception. Note that the __context__ attribute of a remote exception contains an instance of the RemoteError class. The RemoteError class exposes via its exc_chain, the exception chain. Applying the builtin 'str' function on the RemoteError object will return the remote traceback as a string. |
+| Exception | any remote exception. Note that the `__context__` attribute of a remote exception contains an instance of the RemoteError class. The RemoteError class exposes via its exc_chain, the exception chain. Applying the builtin 'str' function on the RemoteError object will return the remote traceback as a string. |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 

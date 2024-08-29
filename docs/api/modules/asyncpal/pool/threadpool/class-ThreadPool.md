@@ -1,21 +1,21 @@
 ###### Asyncpal API Reference
-[Home](/docs/api/README.md) | [Project](/README.md) | [Module](/docs/api/modules/asyncpal/__init__/README.md) | [Source](/asyncpal/__init__.py)
+[Home](/docs/api/README.md) | [Project](/README.md) | [Module](/docs/api/modules/asyncpal/pool/threadpool/README.md) | [Source](/asyncpal/pool/threadpool.py)
 
-# Class ProcessPool
-> Module: [asyncpal.\_\_init\_\_](/docs/api/modules/asyncpal/__init__/README.md)
+# Class ThreadPool
+> Module: [asyncpal.pool.threadpool](/docs/api/modules/asyncpal/pool/threadpool/README.md)
 >
-> Class: **ProcessPool**
+> Class: **ThreadPool**
 >
 > Inheritance: [asyncpal.pool.Pool](/docs/api/modules/asyncpal/pool/class-Pool.md)
 
-The ProcessPool class for parallelism.
+The ThreadPool class for  preemptive concurrency.
 
 ## Fields table
 Here are fields exposed in the class:
 
 | Field | Value |
 | --- | --- |
-| \_abc\_impl | `<_abc_data object at 0x7f9819f4b060>` |
+| \_abc\_impl | `<_abc_data object at 0x7f9819f3a360>` |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -66,7 +66,6 @@ Here are methods exposed in the class:
 - [\_cancel\_tasks](#_cancel_tasks)
 - [\_cleanup\_cached\_futures](#_cleanup_cached_futures)
 - [\_cleanup\_task\_queue](#_cleanup_task_queue)
-- [\_consume\_message\_queue](#_consume_message_queue)
 - [\_count\_busy\_workers](#_count_busy_workers)
 - [\_count\_free\_workers](#_count_free_workers)
 - [\_count\_pending\_tasks](#_count_pending_tasks)
@@ -92,22 +91,20 @@ Here are methods exposed in the class:
 - [\_shutdown\_filter\_thread](#_shutdown_filter_thread)
 - [\_shutdown\_message\_thread](#_shutdown_message_thread)
 - [\_spawn\_filter\_thread](#_spawn_filter_thread)
-- [\_spawn\_message\_thread](#_spawn_message_thread)
 - [\_spawn\_workers](#_spawn_workers)
 - [\_submit\_task](#_submit_task)
-- [\_update\_future](#_update_future)
 
 ## \_\_init\_\_
 Initialization.
 
 ```python
-def __init__(self, max_workers=None, *, name='ProcessPool', idle_timeout=60, initializer=None, init_args=None, init_kwargs=None, finalizer=None, final_args=None, final_kwargs=None, max_tasks_per_worker=None, mp_context=None):
+def __init__(self, max_workers=None, *, name='ThreadPool', idle_timeout=60, initializer=None, init_args=None, init_kwargs=None, finalizer=None, final_args=None, final_kwargs=None, max_tasks_per_worker=None):
     ...
 ```
 
 | Parameter | Description |
 | --- | --- |
-| max\_workers | the maximum number of workers. Defaults to CPU count. On Windows, the maximum number that is accepted for the max_workers is 60. |
+| max\_workers | the maximum number of workers. Defaults to CPU count + 5 |
 | name | the name of the pool. Defaults to the class name |
 | idle\_timeout | None or a timeout value in seconds. The idle timeout tells how much time an inactive worker can sleep before it closes. This helps the pool to shrink when there isn't much of tasks. If you set None, the pool will never shrink. each worker before it closes |
 | initializer | a function that will get called at the start of each worker |
@@ -117,7 +114,6 @@ def __init__(self, max_workers=None, *, name='ProcessPool', idle_timeout=60, ini
 | final\_args | arguments (list) to pass to the finalizer |
 | final\_kwargs | keyword arguments (dict) to pass to the finalizer |
 | max\_tasks\_per\_worker | Maximum number of tasks a worker is allowed to do before it closes. |
-| mp\_context | the multiprocessing context. Defaults to multiprocessing.get_context("spawn") |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -468,16 +464,6 @@ def _cleanup_task_queue(self):
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
-## \_consume\_message\_queue
-No docstring
-
-```python
-def _consume_message_queue(self):
-    ...
-```
-
-<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
-
 ## \_count\_busy\_workers
 No docstring
 
@@ -728,16 +714,6 @@ def _spawn_filter_thread(self):
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
-## \_spawn\_message\_thread
-No docstring
-
-```python
-def _spawn_message_thread(self):
-    ...
-```
-
-<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
-
 ## \_spawn\_workers
 No docstring
 
@@ -753,16 +729,6 @@ No docstring
 
 ```python
 def _submit_task(self, target, *args, **kwargs):
-    ...
-```
-
-<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
-
-## \_update\_future
-No docstring
-
-```python
-def _update_future(self, message):
     ...
 ```
 

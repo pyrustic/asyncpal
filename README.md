@@ -35,7 +35,7 @@
 
 
 # Overview
-**Asyncpal** is a [Python](https://www.python.org/) library designed for [parallelism](https://en.wikipedia.org/wiki/Parallel_computing) and preemptive [concurrency](https://en.wikipedia.org/wiki/Concurrent_computing). It achieves concurrency using the [thread pool](https://en.wikipedia.org/wiki/Thread_pool) design pattern that it extends with processes to enable parallelism.
+**Asyncpal** is a [Python](https://www.python.org/) library designed for preemptive [concurrency](https://en.wikipedia.org/wiki/Concurrent_computing) and [parallelism](https://en.wikipedia.org/wiki/Parallel_computing). It achieves concurrency using the [thread pool](https://en.wikipedia.org/wiki/Thread_pool) design pattern that it extends with processes to enable parallelism.
 
 ## Designed for sporadic workloads
 Although a thread pool is the right tool for the problems it solves, its creation and usage involve the allocation of resources that must be properly released. For this reason, it is recommended to use a thread pool with a context manager to ensure that resources are properly released.

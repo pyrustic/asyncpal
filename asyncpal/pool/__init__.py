@@ -12,7 +12,10 @@ from asyncpal import misc
 from asyncpal.future import Future, Status, as_done, FutureFilter
 from asyncpal.worker import WorkerType
 
-__all__ = []
+
+__all__ = ["Pool", "IDLE_TIMEOUT", "MP_CONTEXT",
+           "WINDOWS_MAX_PROCESS_WORKERS"]
+
 
 IDLE_TIMEOUT = 60
 MP_CONTEXT = mp.get_context("spawn")

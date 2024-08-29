@@ -1,21 +1,21 @@
 ###### Asyncpal API Reference
-[Home](/docs/api/README.md) | [Project](/README.md) | [Module](/docs/api/modules/asyncpal/__init__/README.md) | [Source](/asyncpal/__init__.py)
+[Home](/docs/api/README.md) | [Project](/README.md) | [Module](/docs/api/modules/asyncpal/pool/processpool/README.md) | [Source](/asyncpal/pool/processpool.py)
 
-# Class ProcessPool
-> Module: [asyncpal.\_\_init\_\_](/docs/api/modules/asyncpal/__init__/README.md)
+# Class SingleProcessPool
+> Module: [asyncpal.pool.processpool](/docs/api/modules/asyncpal/pool/processpool/README.md)
 >
-> Class: **ProcessPool**
+> Class: **SingleProcessPool**
 >
-> Inheritance: [asyncpal.pool.Pool](/docs/api/modules/asyncpal/pool/class-Pool.md)
+> Inheritance: [asyncpal.pool.processpool.ProcessPool](/docs/api/modules/asyncpal/pool/processpool/class-ProcessPool.md)
 
-The ProcessPool class for parallelism.
+Fixed-size process pool. This pool can spawn only 1 worker
 
 ## Fields table
 Here are fields exposed in the class:
 
 | Field | Value |
 | --- | --- |
-| \_abc\_impl | `<_abc_data object at 0x7f9819f4b060>` |
+| \_abc\_impl | `<_abc_data object at 0x7f9819f4b5d0>` |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -101,7 +101,7 @@ Here are methods exposed in the class:
 Initialization.
 
 ```python
-def __init__(self, max_workers=None, *, name='ProcessPool', idle_timeout=60, initializer=None, init_args=None, init_kwargs=None, finalizer=None, final_args=None, final_kwargs=None, max_tasks_per_worker=None, mp_context=None):
+def __init__(self, *, name='SingleProcessPool', idle_timeout=60, initializer=None, init_args=None, init_kwargs=None, finalizer=None, final_args=None, final_kwargs=None, max_tasks_per_worker=None, mp_context=None):
     ...
 ```
 

@@ -13,6 +13,7 @@ from asyncpal import errors
 __all__ = ["split_map_task", "split_starmap_task",
            "get_chunks", "Countdown", "LOGGER"]
 
+
 LOGGER = logging.getLogger("asyncpal")
 
 

@@ -5,7 +5,9 @@ from asyncpal import misc
 from asyncpal.worker.threadworker import ThreadWorker
 from asyncpal.pool import Pool, WorkerType, IDLE_TIMEOUT
 
-__all__ = []
+
+__all__ = ["ThreadPool", "SingleThreadPool", "DualThreadPool",
+           "TripleThreadPool", "QuadThreadPool"]
 
 
 class ThreadPool(Pool):

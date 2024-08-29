@@ -8,6 +8,9 @@ from queue import SimpleQueue, Empty as EmptyQueue
 from asyncpal import errors, misc
 
 
+__all__ = ["Future", "FutureFilter", "wait", "collect", "as_done"]
+
+
 def wait(futures, timeout=None):
     """
     Wait (blocking) for futures to get done (completed, failed, or cancelled).

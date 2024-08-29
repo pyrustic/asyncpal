@@ -7,16 +7,6 @@
 In this module is defined the `Future` and the `FutureFilter`
 classes as well as the `wait`, `collect`, and `as_done` functions
 
-## Fields
-- [**All fields**](/docs/api/modules/asyncpal/future/__init__/fields.md)
-    - errors = `<module 'asyncpal.errors' from '/home/alex/PycharmProjects/asyncpal/asyncpal/errors/__init__.py'>`
-    - functools = `<module 'functools' from '/usr/local/lib/python3.8/functools.py'>`
-    - misc = `<module 'asyncpal.misc' from '/home/alex/PycharmProjects/asyncpal/asyncpal/misc/__init__.py'>`
-    - threading = `<module 'threading' from '/usr/local/lib/python3.8/threading.py'>`
-    - time = `<module 'time' (built-in)>`
-
-<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
-
 ## Functions
 - [**All functions**](/docs/api/modules/asyncpal/future/__init__/funcs.md)
     - [as\_done](/docs/api/modules/asyncpal/future/__init__/funcs.md#as_done): Yields futures iteratively as they are done
@@ -60,11 +50,5 @@ classes as well as the `wait`, `collect`, and `as_done` functions
     - [populate](/docs/api/modules/asyncpal/future/__init__/class-FutureFilter.md#populate): Populate the filter
     - [put](/docs/api/modules/asyncpal/future/__init__/class-FutureFilter.md#put): Add a future to the filter
     - [\_get\_from\_queue](/docs/api/modules/asyncpal/future/__init__/class-FutureFilter.md#_get_from_queue): No docstring.
-- [**Status**](/docs/api/modules/asyncpal/future/__init__/class-Status.md): An enumeration.
-    - PENDING = `1`
-    - RUNNING = `2`
-    - COMPLETED = `3`
-    - FAILED = `4`
-    - CANCELLED = `5`
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>

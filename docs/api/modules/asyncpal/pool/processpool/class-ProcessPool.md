@@ -1,8 +1,8 @@
 ###### Asyncpal API Reference
-[Home](/docs/api/README.md) | [Project](/README.md) | [Module](/docs/api/modules/asyncpal/__init__/README.md) | [Source](/asyncpal/__init__.py)
+[Home](/docs/api/README.md) | [Project](/README.md) | [Module](/docs/api/modules/asyncpal/pool/processpool/README.md) | [Source](/asyncpal/pool/processpool.py)
 
 # Class ProcessPool
-> Module: [asyncpal.\_\_init\_\_](/docs/api/modules/asyncpal/__init__/README.md)
+> Module: [asyncpal.pool.processpool](/docs/api/modules/asyncpal/pool/processpool/README.md)
 >
 > Class: **ProcessPool**
 >
