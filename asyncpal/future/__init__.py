@@ -282,7 +282,7 @@ class Future:
         [except]
         - TimeoutError: raised when timeout expires
         - CancelledError: raised when a task got cancelled
-        - Exception: any remote exception. Note that the __context__
+        - Exception: any remote exception. Note that the `__context__`
         attribute of a remote exception contains an instance of
         the RemoteError class. The RemoteError class exposes via
         its exc_chain, the exception chain. Applying the builtin

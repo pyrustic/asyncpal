@@ -6,6 +6,7 @@ class TestImports(unittest.TestCase):
     def test_import_classes(self):
         try:
             # import classes
+            from asyncpal import Pool
             from asyncpal import ThreadPool
             from asyncpal import ProcessPool
             from asyncpal import SingleThreadPool

@@ -307,7 +307,7 @@ assert pool.terminated
 pool.cancelled_tasks
 ```
 
-> Check out the API reference for [asyncpal.ThreadPool]().
+> Check out the API reference for [asyncpal.ThreadPool](https://github.com/pyrustic/asyncpal/blob/master/docs/api/modules/asyncpal/__init__/class-ThreadPool.md).
 
 ## ProcessPool class
 Parallelism is achieved with the `ProcessPool` class. Under the hood, the process pool spawns Python's `multiprocessing.Process` as workers with the `spawn` context. 
@@ -324,7 +324,7 @@ For convenience, the following four derived classes are provided:
 
 > Note that you must guard your process pool with `if __name__ == '__main__'` and also avoid writting multiprocessing code directly in the `__main__` module of your projects.
 
-> Check out the API reference for [asyncpal.ProcessPool]().
+> Check out the API reference for [asyncpal.ProcessPool](https://github.com/pyrustic/asyncpal/blob/master/docs/api/modules/asyncpal/__init__/class-ProcessPool.md).
 
 ## Future class
 
@@ -377,11 +377,11 @@ with ThreadPool(4) as pool:
 ```
 
 
-> Check out the API reference for [asyncpal.Future]().
+> Check out the API reference for [asyncpal.Future](https://github.com/pyrustic/asyncpal/blob/master/docs/api/modules/asyncpal/__init__/class-Future.md).
 
 ## Miscellaneous functions and classes
 
-> Check out the API reference for [asyncpal]().
+> Check out the API reference for [asyncpal](https://github.com/pyrustic/asyncpal/blob/master/docs/api/modules/asyncpal/__init__/funcs.md).
 
 
 # Testing and contributing

@@ -1,9 +1,9 @@
-"""Classes, Functions, and Constants declared in this root __init__ module are public"""
+"""All public Classes, Functions, and Constants"""
 from asyncpal.pool import IDLE_TIMEOUT
 from asyncpal.misc import (LOGGER, get_chunks, split_map_task,
                            split_starmap_task, Countdown)
 from asyncpal.future import Future, FutureFilter, as_done, wait, collect
-from asyncpal.pool.threadpool import (ThreadPool, SingleThreadPool,
+from asyncpal.pool.threadpool import (Pool, ThreadPool, SingleThreadPool,
                                       DualThreadPool, TripleThreadPool,
                                       QuadThreadPool)
 from asyncpal.pool.processpool import (ProcessPool, SingleProcessPool,
@@ -15,7 +15,7 @@ from asyncpal.errors import (Error, RemoteError, BrokenPoolError,
                              InvalidStateError, CancelledError)
 
 
-__all__ = ["ThreadPool", "ProcessPool",
+__all__ = ["Pool", "ThreadPool", "ProcessPool",
            "SingleThreadPool", "SingleProcessPool",
            "DualThreadPool", "DualProcessPool",
            "TripleThreadPool", "TripleProcessPool",
