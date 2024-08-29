@@ -1,4 +1,4 @@
-"""In this module is defined the `Future` and the `FutureFilter`
+"""In this module are defined the `Future` and the `FutureFilter`
 classes as well as the `wait`, `collect`, and `as_done` functions"""
 import functools
 import time

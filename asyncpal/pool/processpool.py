@@ -1,4 +1,4 @@
-"""The ProcessPool, SingleProcessPool, DualProcessPool,
+"""ProcessPool, SingleProcessPool, DualProcessPool,
 TripleProcessPool, and QuadProcessPool are defined here"""
 import sys
 import threading

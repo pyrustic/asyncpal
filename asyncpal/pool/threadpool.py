@@ -1,4 +1,4 @@
-"""The ThreadPool, SingleThreadPool, DualThreadPool,
+"""ThreadPool, SingleThreadPool, DualThreadPool,
 TripleThreadPool, and QuadThreadPool are defined here"""
 import queue
 from asyncpal import misc

@@ -4,7 +4,7 @@
 # Module Overview
 > Module: **asyncpal.future.\_\_init\_\_**
 
-In this module is defined the `Future` and the `FutureFilter`
+In this module are defined the `Future` and the `FutureFilter`
 classes as well as the `wait`, `collect`, and `as_done` functions
 
 ## Functions
