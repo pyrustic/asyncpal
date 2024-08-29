@@ -1,0 +1,3 @@
+recursive-include asyncpal *
+global-exclude *.py[cod]
+include VERSION
