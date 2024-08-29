@@ -10,31 +10,59 @@ Here are functions exposed in the module:
 - [split\_starmap\_task](#split_starmap_task)
 
 ## get\_chunks
-Split an iterable into chunks\x0a\x0a[param]\x0a- iterable: the iterable to split\x0a- chunk_size: max length for a chunk\x0a\x0a[return]\x0aReturns an iterator
+Split an iterable into chunks
 
 ```python
 def get_chunks(iterable, chunk_size):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| iterable | the iterable to split |
+| chunk\_size | max length for a chunk |
+
+### Value to return
+Returns an iterator
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## split\_map\_task
-Split a map task into subtasks that don't take any arguments.\x0aThe iterables are chunked according to chunk_size.\x0a\x0a[param]\x0a- target: the callable task\x0a- iterables: the map iterables to pass to target\x0a- chunk_size: the max length of a chunk\x0a\x0a[yield]\x0aIteratively get a subtask that don't accept any arguments
+Split a map task into subtasks that don't take any arguments.
+The iterables are chunked according to chunk_size.
 
 ```python
 def split_map_task(target, *iterables, chunk_size=1):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| target | the callable task |
+| iterables | the map iterables to pass to target |
+| chunk\_size | the max length of a chunk |
+
+### Value to yield
+Iteratively get a subtask that don't accept any arguments
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## split\_starmap\_task
-Split a starmap task into subtasks that don't take any arguments.\x0aThe iterable is chunked according to chunk_size.\x0a\x0a[param]\x0a- target: the callable task\x0a- iterable: a sequence of tuples each representing args to pass to target\x0a- chunk_size: the max length of a chunk\x0a\x0a[yield]\x0aIteratively get a subtask that don't accept any arguments
+Split a starmap task into subtasks that don't take any arguments.
+The iterable is chunked according to chunk_size.
 
 ```python
 def split_starmap_task(target, iterable, chunk_size=1):
     ...
 ```
+
+| Parameter | Description |
+| --- | --- |
+| target | the callable task |
+| iterable | a sequence of tuples each representing args to pass to target |
+| chunk\_size | the max length of a chunk |
+
+### Value to yield
+Iteratively get a subtask that don't accept any arguments
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>

@@ -31,7 +31,8 @@ def get_chunks(iterable, chunk_size):
     - chunk_size: max length for a chunk
 
     [return]
-    Returns an iterator"""
+    Returns an iterator
+    """
     iterator = iter(iterable)
     return iter(lambda: tuple(itertools.islice(iterator, chunk_size)),
                 tuple())

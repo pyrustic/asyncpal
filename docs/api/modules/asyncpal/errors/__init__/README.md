@@ -25,7 +25,7 @@ Errors raised by the library
 - [**InvalidStateError**](/docs/api/modules/asyncpal/errors/__init__/class-InvalidStateError.md): Common base class for all non-exit exceptions.
     - [args](/docs/api/modules/asyncpal/errors/__init__/class-InvalidStateError.md#fields-table) = `<attribute 'args' of 'BaseException' objects>`
     - [with\_traceback](/docs/api/modules/asyncpal/errors/__init__/class-InvalidStateError.md#fields-table) = `<method 'with_traceback' of 'BaseException' objects>`
-- [**RemoteError**](/docs/api/modules/asyncpal/errors/__init__/class-RemoteError.md): An object of this class is available on the\x0a__context__ attribute of any remote exception\x0ain a ProcessPool. This class has...
+- [**RemoteError**](/docs/api/modules/asyncpal/errors/__init__/class-RemoteError.md): An object of this class is available on the __context__ attribute of any remote exception in a ProcessPool. This class has zero ...
     - [args](/docs/api/modules/asyncpal/errors/__init__/class-RemoteError.md#fields-table) = `<attribute 'args' of 'BaseException' objects>`
     - [with\_traceback](/docs/api/modules/asyncpal/errors/__init__/class-RemoteError.md#fields-table) = `<method 'with_traceback' of 'BaseException' objects>`
     - [exc\_chain](/docs/api/modules/asyncpal/errors/__init__/class-RemoteError.md#properties-table); _getter_

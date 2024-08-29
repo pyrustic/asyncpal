@@ -8,7 +8,9 @@
 >
 > Inheritance: [asyncpal.errors.Error](/docs/api/modules/asyncpal/errors/class-Error.md)
 
-An object of this class is available on the\x0a__context__ attribute of any remote exception\x0ain a ProcessPool. This class has zero link with ThreadPool.
+An object of this class is available on the
+__context__ attribute of any remote exception
+in a ProcessPool. This class has zero link with ThreadPool.
 
 ## Fields table
 Here are fields exposed in the class:

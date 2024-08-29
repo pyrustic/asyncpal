@@ -8,7 +8,13 @@
 >
 > Inheritance: `object`
 
-This is a filter. First, you populate it with Future\x0aobjects, then you retrieve futures as they are done.\x0aYou can also retrieve futures while feeding the filter.\x0aThe original order of the futures doesn't matter here.\x0a\x0aThis class is used by the `as_done` function when its\x0aordered option is set to False.
+This is a filter. First, you populate it with Future
+objects, then you retrieve futures as they are done.
+You can also retrieve futures while feeding the filter.
+The original order of the futures doesn't matter here.
+
+This class is used by the `as_done` function when its
+ordered option is set to False.
 
 ## Properties table
 Here are properties exposed in the class:
@@ -39,42 +45,66 @@ def __init__(self, futures=None):
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## get
-Retrieve just one future that is done.\x0a\x0a[param]\x0a- block: boolean to block until one future is done\x0a- timeout: None or a timeout value (int or float) in seconds.\x0a\x0a[return]\x0aReturns a future object that is done
+Retrieve just one future that is done.
 
 ```python
 def get(self, block=True, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| block | boolean to block until one future is done |
+| timeout | None or a timeout value (int or float) in seconds. |
+
+### Value to return
+Returns a future object that is done
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## get\_all
-Yield futures as they are done until the filter is empty\x0a\x0a[param]\x0a- block: boolean to block until one future is done\x0a- timeout: None or a timeout value (int or float) in seconds.\x0a\x0a[yield]\x0aYield a future object that is done until the filter is empty
+Yield futures as they are done until the filter is empty
 
 ```python
 def get_all(self, block=True, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| block | boolean to block until one future is done |
+| timeout | None or a timeout value (int or float) in seconds. |
+
+### Value to yield
+Yield a future object that is done until the filter is empty
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## populate
-Populate the filter\x0a\x0a[param]\x0a- futures: sequence of Future object
+Populate the filter
 
 ```python
 def populate(self, futures):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| futures | sequence of Future object |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## put
-Add a future to the filter\x0a\x0a[param]\x0a- future: Future object
+Add a future to the filter
 
 ```python
 def put(self, future):
     ...
 ```
+
+| Parameter | Description |
+| --- | --- |
+| future | Future object |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 

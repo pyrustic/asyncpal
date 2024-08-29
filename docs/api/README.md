@@ -15,7 +15,7 @@ Errors raised by the library
 
 [asyncpal.future.\_\_init\_\_](/docs/api/modules/asyncpal/future/__init__/README.md)
 <br>
-In this module is defined the `Future` and the `FutureFilter`\x0aclasses as well as the `wait`, `collect`, and `as_done` functions
+In this module is defined the `Future` and the `FutureFilter` classes as well as the `wait`, `collect`, and `as_done` functions
 
 [asyncpal.misc.\_\_init\_\_](/docs/api/modules/asyncpal/misc/__init__/README.md)
 <br>

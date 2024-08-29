@@ -59,27 +59,37 @@ def __init__(self, pool, task_id):
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## add\_callback
-Add one callback that accepts the future as argument.\x0a\x0a[param]\x0a- callback: the callback to add
+Add one callback that accepts the future as argument.
 
 ```python
 def add_callback(self, callback):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| callback | the callback to add |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## add\_callbacks
-Add a sequence of callbacks that accept the future as argument.\x0a\x0a[param]\x0a- callbacks: sequence of callbacks
+Add a sequence of callbacks that accept the future as argument.
 
 ```python
 def add_callbacks(self, callbacks):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| callbacks | sequence of callbacks |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## cancel
-Tries to cancel the linked task.\x0aNote that right after, the cancel_flag property is set to True\x0aand later, the cancelled property will be set to True or not.
+Tries to cancel the linked task.
+Note that right after, the cancel_flag property is set to True
+and later, the cancelled property will be set to True or not.
 
 ```python
 def cancel(self):
@@ -89,32 +99,58 @@ def cancel(self):
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## collect
-Collect the result of the task.\x0aBeware, a remote exception as well as CancelledError,\x0aor TimeoutError exceptions may be raised.\x0a\x0a[param]\x0a- timeout: None or a timeout value (int or float) in seconds.\x0a\x0a[return]\x0aReturns the collected result\x0a\x0a[except]\x0a- TimeoutError: raised when timeout expires\x0a- CancelledError: raised when a task got cancelled\x0a- Exception: any remote exception. Note that the __context__\x0aattribute of a remote exception contains an instance of\x0athe RemoteError class. The RemoteError class exposes via\x0aits exc_chain, the exception chain. Applying the builtin\x0a'str' function on the RemoteError object will return\x0athe remote traceback as a string.
+Collect the result of the task.
+Beware, a remote exception as well as CancelledError,
+or TimeoutError exceptions may be raised.
 
 ```python
 def collect(self, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| timeout | None or a timeout value (int or float) in seconds. |
+
+### Value to return
+Returns the collected result
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| TimeoutError | raised when timeout expires |
+| CancelledError | raised when a task got cancelled |
+| Exception | any remote exception. Note that the __context__ attribute of a remote exception contains an instance of the RemoteError class. The RemoteError class exposes via its exc_chain, the exception chain. Applying the builtin 'str' function on the RemoteError object will return the remote traceback as a string. |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## remove\_callback
-Remove a callback\x0a\x0a[param]\x0a- callback: the callback to remove
+Remove a callback
 
 ```python
 def remove_callback(self, callback):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| callback | the callback to remove |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## remove\_callbacks
-Remove a sequence of callbacks\x0a\x0a[param]\x0a- callbacks: sequence of callbacks
+Remove a sequence of callbacks
 
 ```python
 def remove_callbacks(self, callbacks):
     ...
 ```
+
+| Parameter | Description |
+| --- | --- |
+| callbacks | sequence of callbacks |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -149,12 +185,19 @@ def set_status(self, status, instant=None):
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## wait
-Wait (blocking) for the future to be done (completed, failed, or cancelled).\x0a\x0a[param]\x0a- timeout: None or a timeout value (int or float) in seconds.\x0a\x0a[return]\x0aReturns True if the future is done in the provided timeout range.
+Wait (blocking) for the future to be done (completed, failed, or cancelled).
 
 ```python
 def wait(self, timeout=None):
     ...
 ```
+
+| Parameter | Description |
+| --- | --- |
+| timeout | None or a timeout value (int or float) in seconds. |
+
+### Value to return
+Returns True if the future is done in the provided timeout range.
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 

@@ -15,7 +15,7 @@ Here are fields exposed in the class:
 
 | Field | Value |
 | --- | --- |
-| \_abc\_impl | `<_abc_data object at 0x7f8d031ce0f0>` |
+| \_abc\_impl | `<_abc_data object at 0x7f83f9ed71b0>` |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -95,22 +95,43 @@ Here are methods exposed in the class:
 - [\_submit\_task](#_submit_task)
 
 ## \_\_init\_\_
-Initialization.\x0a\x0a[param]\x0a- max_workers: the maximum number of workers. Defaults to CPU count + 5\x0a- name: the name of the pool. Defaults to the class name\x0a- idle_timeout: None or a timeout value in seconds.\x0a    The idle timeout tells how much time an inactive worker\x0a    can sleep before it closes. This helps the pool to shrink\x0a    when there isn't much of tasks.\x0a    If you set None, the pool will never shrink. each worker before it closes\x0a- initializer: a function that will get called at the start of each worker\x0a- init_args: arguments (list) to pass to the initializer\x0a- init_kwargs: keyword arguments (dict) to pass to the initializer\x0a- finalizer: a function that will get called when the worker is going to close\x0a- final_args: arguments (list) to pass to the finalizer\x0a- final_kwargs: keyword arguments (dict) to pass to the finalizer\x0a- max_tasks_per_worker: Maximum number of tasks a worker is allowed to do\x0a    before it closes.
+Initialization.
 
 ```python
 def __init__(self, *, name='SingleThreadPool', idle_timeout=60, initializer=None, init_args=None, init_kwargs=None, finalizer=None, final_args=None, final_kwargs=None, max_tasks_per_worker=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| max\_workers | the maximum number of workers. Defaults to CPU count + 5 |
+| name | the name of the pool. Defaults to the class name |
+| idle\_timeout | None or a timeout value in seconds. The idle timeout tells how much time an inactive worker can sleep before it closes. This helps the pool to shrink when there isn't much of tasks. If you set None, the pool will never shrink. each worker before it closes |
+| initializer | a function that will get called at the start of each worker |
+| init\_args | arguments (list) to pass to the initializer |
+| init\_kwargs | keyword arguments (dict) to pass to the initializer |
+| finalizer | a function that will get called when the worker is going to close |
+| final\_args | arguments (list) to pass to the finalizer |
+| final\_kwargs | keyword arguments (dict) to pass to the finalizer |
+| max\_tasks\_per\_worker | Maximum number of tasks a worker is allowed to do before it closes. |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## check
-Check the pool\x0a\x0a[except]\x0a- RuntimeError: raised if the pool is closed\x0a- BrokenPoolError: raised if the pool is broken
+Check the pool
 
 ```python
 def check(self):
     ...
 ```
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised if the pool is closed |
+| BrokenPoolError | raised if the pool is broken |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -155,52 +176,129 @@ def count_workers(self):
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## join
-Join the workers, i.e., wait for workers to end their works, then close them\x0a\x0a[param]\x0a- timeout: None or a number representing seconds.\x0a\x0a[except]\x0a- RuntimeError: raised when timeout expires
+Join the workers, i.e., wait for workers to end their works, then close them
 
 ```python
 def join(self, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| timeout | None or a number representing seconds. |
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised when timeout expires |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## map
-Perform a Map operation lazily and return an iterator\x0athat iterates over the results.\x0aBeware, a remote exception will be reraised here\x0a\x0a[param]\x0a- target: callable\x0a- iterables: iterables to pass to the target\x0a- chunk_size: max length for a chunk\x0a- buffer_size: the buffer_size. A bigger size will consume more memory\x0a    but the overall operation will be faster\x0a- ordered: whether the original order should be kept or not\x0a- timeout: None or a timeout (int or float) value in seconds\x0a\x0a[return]\x0aReturns an iterator\x0a\x0a[except]\x0a- RuntimeError: raised when the pool is closed\x0a- BrokenPoolError: raised when the pool is broken\x0a- Exception: any remote exception
+Perform a Map operation lazily and return an iterator
+that iterates over the results.
+Beware, a remote exception will be reraised here
 
 ```python
 def map(self, target, *iterables, chunk_size=1, buffer_size=1, ordered=True, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| target | callable |
+| iterables | iterables to pass to the target |
+| chunk\_size | max length for a chunk |
+| buffer\_size | the buffer_size. A bigger size will consume more memory but the overall operation will be faster |
+| ordered | whether the original order should be kept or not |
+| timeout | None or a timeout (int or float) value in seconds |
+
+### Value to return
+Returns an iterator
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised when the pool is closed |
+| BrokenPoolError | raised when the pool is broken |
+| Exception | any remote exception |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## map\_all
-Perform a Map operation eagerly and return an iterator\x0athat iterates over the results.\x0aUsing this method instead of the `map` method might cause high memory usage.\x0aBeware, a remote exception will be reraised here\x0a\x0a[param]\x0a- target: callable\x0a- iterables: iterables to pass to the target\x0a- chunk_size: max length for a chunk\x0a- ordered: whether the original order should be kept or not\x0a- timeout: None or a timeout (int or float) value in seconds\x0a\x0a[return]\x0aReturns an iterator that iterates over the results.\x0a\x0a[except]\x0a- RuntimeError: raised when the pool is closed\x0a- BrokenPoolError: raised when the pool is broken\x0a- Exception: any remote exception
+Perform a Map operation eagerly and return an iterator
+that iterates over the results.
+Using this method instead of the `map` method might cause high memory usage.
+Beware, a remote exception will be reraised here
 
 ```python
 def map_all(self, target, *iterables, chunk_size=1, ordered=True, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| target | callable |
+| iterables | iterables to pass to the target |
+| chunk\_size | max length for a chunk |
+| ordered | whether the original order should be kept or not |
+| timeout | None or a timeout (int or float) value in seconds |
+
+### Value to return
+Returns an iterator that iterates over the results.
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised when the pool is closed |
+| BrokenPoolError | raised when the pool is broken |
+| Exception | any remote exception |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## run
-Submit the task to the pool, and return\x0athe result (or re-raise the exception raised by the callable)\x0a\x0a[param]\x0a- target: callable\x0a- args: args to pass to the callable\x0a- kwargs: kwargs to pass to the callable\x0a\x0a[except]\x0a- RuntimeError: raised when the pool is closed\x0a- BrokenPoolError: raised when the pool is broken\x0a- Exception: exception that might be raised by the task itself
+Submit the task to the pool, and return
+the result (or re-raise the exception raised by the callable)
 
 ```python
 def run(self, target, /, *args, **kwargs):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| target | callable |
+| args | args to pass to the callable |
+| kwargs | kwargs to pass to the callable |
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised when the pool is closed |
+| BrokenPoolError | raised when the pool is broken |
+| Exception | exception that might be raised by the task itself |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## shutdown
-Close the pool by joining workers and cancelling pending tasks.\x0aNote that cancelled tasks can be retrieved via the cancelled_tasks property.\x0a\x0a[return]\x0aReturns False if the pool has already been closed, else returns True.
+Close the pool by joining workers and cancelling pending tasks.
+Note that cancelled tasks can be retrieved via the cancelled_tasks property.
 
 ```python
 def shutdown(self):
     ...
 ```
+
+### Value to return
+Returns False if the pool has already been closed, else returns True.
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -215,47 +313,119 @@ def spawn_max_workers(self):
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## spawn\_workers
-Spawn a specific number of workers or the right number\x0aof workers that is needed\x0a\x0a[param]\x0a- n: None or an integer.\x0a\x0a[return]\x0aReturns the number of spawned workers
+Spawn a specific number of workers or the right number
+of workers that is needed
 
 ```python
 def spawn_workers(self, n=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| n | None or an integer. |
+
+### Value to return
+Returns the number of spawned workers
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## starmap
-Perform a Starmap operation lazily and return an iterator\x0athat iterates over the results.\x0aBeware, a remote exception will be reraised here\x0a\x0a[param]\x0a- target: callable\x0a- iterable: sequence of args to pass to the target\x0a- chunk_size: max length for a chunk\x0a- buffer_size: the buffer_size. A bigger size will consume more memory\x0a    but the overall operation will be faster\x0a- ordered: whether the original order should be kept or not\x0a- timeout: None or a timeout (int or float) value in seconds\x0a\x0a[return]\x0aReturns an iterator that iterates over the results.\x0a\x0a[except]\x0a- RuntimeError: raised when the pool is closed\x0a- BrokenPoolError: raised when the pool is broken\x0a- Exception: any remote exception
+Perform a Starmap operation lazily and return an iterator
+that iterates over the results.
+Beware, a remote exception will be reraised here
 
 ```python
 def starmap(self, target, iterable, chunk_size=1, buffer_size=1, ordered=True, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| target | callable |
+| iterable | sequence of args to pass to the target |
+| chunk\_size | max length for a chunk |
+| buffer\_size | the buffer_size. A bigger size will consume more memory but the overall operation will be faster |
+| ordered | whether the original order should be kept or not |
+| timeout | None or a timeout (int or float) value in seconds |
+
+### Value to return
+Returns an iterator that iterates over the results.
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised when the pool is closed |
+| BrokenPoolError | raised when the pool is broken |
+| Exception | any remote exception |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## starmap\_all
-Perform a Starmap operation eagerly and return an iterator\x0athat iterates over the results.\x0aUsing this method instead of the `map` method might cause high memory usage.\x0aBeware, a remote exception will be reraised here\x0a\x0a[param]\x0a- target: callable\x0a- iterable: sequence of args to pass to the target\x0a- chunk_size: max length for a chunk\x0a- ordered: whether the original order should be kept or not\x0a- timeout: None or a timeout (int or float) value in seconds\x0a\x0a[return]\x0aReturns an iterator that iterates over the results.\x0a\x0a[except]\x0a- RuntimeError: raised when the pool is closed\x0a- BrokenPoolError: raised when the pool is broken\x0a- Exception: any remote exception
+Perform a Starmap operation eagerly and return an iterator
+that iterates over the results.
+Using this method instead of the `map` method might cause high memory usage.
+Beware, a remote exception will be reraised here
 
 ```python
 def starmap_all(self, target, iterable, chunk_size=1, ordered=True, timeout=None):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| target | callable |
+| iterable | sequence of args to pass to the target |
+| chunk\_size | max length for a chunk |
+| ordered | whether the original order should be kept or not |
+| timeout | None or a timeout (int or float) value in seconds |
+
+### Value to return
+Returns an iterator that iterates over the results.
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised when the pool is closed |
+| BrokenPoolError | raised when the pool is broken |
+| Exception | any remote exception |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## submit
-Submit the task to the pool, and return\x0aa future object\x0a\x0a[param]\x0a- target: callable\x0a- args: args to pass to the callable\x0a- kwargs: kwargs to pass to the callable\x0a\x0a[except]\x0a- RuntimeError: raised when the pool is closed\x0a- BrokenPoolError: raised when the pool is broken\x0a- Exception: exception that might be raised by the task itself
+Submit the task to the pool, and return
+a future object
 
 ```python
 def submit(self, target, /, *args, **kwargs):
     ...
 ```
 
+| Parameter | Description |
+| --- | --- |
+| target | callable |
+| args | args to pass to the callable |
+| kwargs | kwargs to pass to the callable |
+
+### Exceptions table
+The table below outlines exceptions that may occur.
+
+| Exception | Circumstance |
+| --- | --- |
+| RuntimeError | raised when the pool is closed |
+| BrokenPoolError | raised when the pool is broken |
+| Exception | exception that might be raised by the task itself |
+
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## test
-Test the pool by creating another pool with the same config\x0aand doing some computation on it to ensure that it won't break.\x0aThis method might raise a BrokenPoolError exception
+Test the pool by creating another pool with the same config
+and doing some computation on it to ensure that it won't break.
+This method might raise a BrokenPoolError exception
 
 ```python
 def test(self):
