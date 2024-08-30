@@ -9,10 +9,8 @@ TripleThreadPool, and QuadThreadPool are defined here
 
 ## Classes
 - [**DualThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md): Fixed-size thread pool. This pool can spawn up to 2 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#fields-table) = `<_abc_data object at 0x7f10d06debd0>`
-    - [broken](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ed80>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
-    - [closed](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [finalizer](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
@@ -20,11 +18,13 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [init\_args](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [init\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [initializer](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
+    - [is\_broken](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
+    - [is\_closed](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
+    - [is\_terminated](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [max\_tasks\_per\_worker](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [mp\_context](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [name](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
-    - [terminated](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [worker\_type](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [check](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#check): Check the pool
@@ -35,16 +35,20 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [join](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#join): Join the workers, i.e., wait for workers to end their works, then close them
     - [map](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#map): Perform a Map operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be reraise...
     - [map\_all](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#map_all): Perform a Map operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map` me...
+    - [map\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#map_all_unordered): Same as map with 'keep_order' set to False
+    - [map\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#map_unordered): Same as map with 'keep_order' set to False
     - [run](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#run): Submit the task to the pool, and return the result (or re-raise the exception raised by the callable)
     - [shutdown](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#shutdown): Close the pool by joining workers and cancelling pending tasks. Note that cancelled tasks can be retrieved via the cancelled_tas...
     - [spawn\_max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#spawn_max_workers): Spawn the maximum number of workers
     - [spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#spawn_workers): Spawn a specific number of workers or the right number of workers that is needed
     - [starmap](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#starmap): Perform a Starmap operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be rer...
     - [starmap\_all](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#starmap_all): Perform a Starmap operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map...
+    - [starmap\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#starmap_all_unordered): Same as starmap_all with 'keep_order' set to False
+    - [starmap\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#starmap_unordered): Same as starmap with 'keep_order' set to False
     - [submit](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#submit): Submit the task to the pool, and return a future object
     - [test](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#test): Test the pool by creating another pool with the same config and doing some computation on it to ensure that it won't break. This...
     - [\_cancel\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_cancel_tasks): No docstring.
-    - [\_cleanup\_cached\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_cleanup_cached_futures): No docstring.
+    - [\_cleanup\_stored\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_cleanup_stored_futures): No docstring.
     - [\_cleanup\_task\_queue](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_cleanup_task_queue): No docstring.
     - [\_count\_busy\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_count_busy_workers): No docstring.
     - [\_count\_free\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_count_free_workers): No docstring.
@@ -74,10 +78,8 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_submit_task): No docstring.
 - [**QuadThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md): Fixed-size thread pool. This pool can spawn up to 4 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#fields-table) = `<_abc_data object at 0x7f10d06ded50>`
-    - [broken](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ef00>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
-    - [closed](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [finalizer](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
@@ -85,11 +87,13 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [init\_args](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [init\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [initializer](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
+    - [is\_broken](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
+    - [is\_closed](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
+    - [is\_terminated](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [max\_tasks\_per\_worker](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [mp\_context](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [name](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
-    - [terminated](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [worker\_type](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [check](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#check): Check the pool
@@ -100,16 +104,20 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [join](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#join): Join the workers, i.e., wait for workers to end their works, then close them
     - [map](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#map): Perform a Map operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be reraise...
     - [map\_all](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#map_all): Perform a Map operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map` me...
+    - [map\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#map_all_unordered): Same as map with 'keep_order' set to False
+    - [map\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#map_unordered): Same as map with 'keep_order' set to False
     - [run](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#run): Submit the task to the pool, and return the result (or re-raise the exception raised by the callable)
     - [shutdown](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#shutdown): Close the pool by joining workers and cancelling pending tasks. Note that cancelled tasks can be retrieved via the cancelled_tas...
     - [spawn\_max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#spawn_max_workers): Spawn the maximum number of workers
     - [spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#spawn_workers): Spawn a specific number of workers or the right number of workers that is needed
     - [starmap](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#starmap): Perform a Starmap operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be rer...
     - [starmap\_all](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#starmap_all): Perform a Starmap operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map...
+    - [starmap\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#starmap_all_unordered): Same as starmap_all with 'keep_order' set to False
+    - [starmap\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#starmap_unordered): Same as starmap with 'keep_order' set to False
     - [submit](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#submit): Submit the task to the pool, and return a future object
     - [test](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#test): Test the pool by creating another pool with the same config and doing some computation on it to ensure that it won't break. This...
     - [\_cancel\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_cancel_tasks): No docstring.
-    - [\_cleanup\_cached\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_cleanup_cached_futures): No docstring.
+    - [\_cleanup\_stored\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_cleanup_stored_futures): No docstring.
     - [\_cleanup\_task\_queue](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_cleanup_task_queue): No docstring.
     - [\_count\_busy\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_count_busy_workers): No docstring.
     - [\_count\_free\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_count_free_workers): No docstring.
@@ -139,10 +147,8 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_submit_task): No docstring.
 - [**SingleThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md): Fixed-size thread pool. This pool can spawn only 1 worker
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#fields-table) = `<_abc_data object at 0x7f10d06deb10>`
-    - [broken](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ecc0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
-    - [closed](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [finalizer](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
@@ -150,11 +156,13 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [init\_args](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [init\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [initializer](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
+    - [is\_broken](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
+    - [is\_closed](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
+    - [is\_terminated](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [max\_tasks\_per\_worker](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [mp\_context](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [name](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
-    - [terminated](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [worker\_type](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [check](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#check): Check the pool
@@ -165,16 +173,20 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [join](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#join): Join the workers, i.e., wait for workers to end their works, then close them
     - [map](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#map): Perform a Map operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be reraise...
     - [map\_all](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#map_all): Perform a Map operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map` me...
+    - [map\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#map_all_unordered): Same as map with 'keep_order' set to False
+    - [map\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#map_unordered): Same as map with 'keep_order' set to False
     - [run](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#run): Submit the task to the pool, and return the result (or re-raise the exception raised by the callable)
     - [shutdown](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#shutdown): Close the pool by joining workers and cancelling pending tasks. Note that cancelled tasks can be retrieved via the cancelled_tas...
     - [spawn\_max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#spawn_max_workers): Spawn the maximum number of workers
     - [spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#spawn_workers): Spawn a specific number of workers or the right number of workers that is needed
     - [starmap](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#starmap): Perform a Starmap operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be rer...
     - [starmap\_all](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#starmap_all): Perform a Starmap operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map...
+    - [starmap\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#starmap_all_unordered): Same as starmap_all with 'keep_order' set to False
+    - [starmap\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#starmap_unordered): Same as starmap with 'keep_order' set to False
     - [submit](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#submit): Submit the task to the pool, and return a future object
     - [test](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#test): Test the pool by creating another pool with the same config and doing some computation on it to ensure that it won't break. This...
     - [\_cancel\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_cancel_tasks): No docstring.
-    - [\_cleanup\_cached\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_cleanup_cached_futures): No docstring.
+    - [\_cleanup\_stored\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_cleanup_stored_futures): No docstring.
     - [\_cleanup\_task\_queue](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_cleanup_task_queue): No docstring.
     - [\_count\_busy\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_count_busy_workers): No docstring.
     - [\_count\_free\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_count_free_workers): No docstring.
@@ -204,10 +216,8 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_submit_task): No docstring.
 - [**ThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md): The ThreadPool class for  preemptive concurrency.
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#fields-table) = `<_abc_data object at 0x7f10d06de360>`
-    - [broken](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44e510>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
-    - [closed](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [finalizer](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
@@ -215,11 +225,13 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [init\_args](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [init\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [initializer](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
+    - [is\_broken](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
+    - [is\_closed](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
+    - [is\_terminated](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [max\_tasks\_per\_worker](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [mp\_context](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [name](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
-    - [terminated](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [worker\_type](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [check](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#check): Check the pool
@@ -230,16 +242,20 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [join](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#join): Join the workers, i.e., wait for workers to end their works, then close them
     - [map](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#map): Perform a Map operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be reraise...
     - [map\_all](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#map_all): Perform a Map operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map` me...
+    - [map\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#map_all_unordered): Same as map with 'keep_order' set to False
+    - [map\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#map_unordered): Same as map with 'keep_order' set to False
     - [run](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#run): Submit the task to the pool, and return the result (or re-raise the exception raised by the callable)
     - [shutdown](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#shutdown): Close the pool by joining workers and cancelling pending tasks. Note that cancelled tasks can be retrieved via the cancelled_tas...
     - [spawn\_max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#spawn_max_workers): Spawn the maximum number of workers
     - [spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#spawn_workers): Spawn a specific number of workers or the right number of workers that is needed
     - [starmap](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#starmap): Perform a Starmap operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be rer...
     - [starmap\_all](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#starmap_all): Perform a Starmap operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map...
+    - [starmap\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#starmap_all_unordered): Same as starmap_all with 'keep_order' set to False
+    - [starmap\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#starmap_unordered): Same as starmap with 'keep_order' set to False
     - [submit](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#submit): Submit the task to the pool, and return a future object
     - [test](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#test): Test the pool by creating another pool with the same config and doing some computation on it to ensure that it won't break. This...
     - [\_cancel\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_cancel_tasks): No docstring.
-    - [\_cleanup\_cached\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_cleanup_cached_futures): No docstring.
+    - [\_cleanup\_stored\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_cleanup_stored_futures): No docstring.
     - [\_cleanup\_task\_queue](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_cleanup_task_queue): No docstring.
     - [\_count\_busy\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_count_busy_workers): No docstring.
     - [\_count\_free\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_count_free_workers): No docstring.
@@ -269,10 +285,8 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_submit_task): No docstring.
 - [**TripleThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md): Fixed-size thread pool. This pool can spawn up to 3 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#fields-table) = `<_abc_data object at 0x7f10d06dec90>`
-    - [broken](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ee40>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
-    - [closed](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [finalizer](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
@@ -280,11 +294,13 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [init\_args](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [init\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [initializer](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
+    - [is\_broken](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
+    - [is\_closed](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
+    - [is\_terminated](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [max\_tasks\_per\_worker](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [mp\_context](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [name](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
-    - [terminated](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [worker\_type](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [workers](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [check](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#check): Check the pool
@@ -295,16 +311,20 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [join](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#join): Join the workers, i.e., wait for workers to end their works, then close them
     - [map](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#map): Perform a Map operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be reraise...
     - [map\_all](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#map_all): Perform a Map operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map` me...
+    - [map\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#map_all_unordered): Same as map with 'keep_order' set to False
+    - [map\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#map_unordered): Same as map with 'keep_order' set to False
     - [run](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#run): Submit the task to the pool, and return the result (or re-raise the exception raised by the callable)
     - [shutdown](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#shutdown): Close the pool by joining workers and cancelling pending tasks. Note that cancelled tasks can be retrieved via the cancelled_tas...
     - [spawn\_max\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#spawn_max_workers): Spawn the maximum number of workers
     - [spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#spawn_workers): Spawn a specific number of workers or the right number of workers that is needed
     - [starmap](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#starmap): Perform a Starmap operation lazily and return an iterator that iterates over the results. Beware, a remote exception will be rer...
     - [starmap\_all](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#starmap_all): Perform a Starmap operation eagerly and return an iterator that iterates over the results. Using this method instead of the `map...
+    - [starmap\_all\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#starmap_all_unordered): Same as starmap_all with 'keep_order' set to False
+    - [starmap\_unordered](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#starmap_unordered): Same as starmap with 'keep_order' set to False
     - [submit](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#submit): Submit the task to the pool, and return a future object
     - [test](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#test): Test the pool by creating another pool with the same config and doing some computation on it to ensure that it won't break. This...
     - [\_cancel\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#_cancel_tasks): No docstring.
-    - [\_cleanup\_cached\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#_cleanup_cached_futures): No docstring.
+    - [\_cleanup\_stored\_futures](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#_cleanup_stored_futures): No docstring.
     - [\_cleanup\_task\_queue](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#_cleanup_task_queue): No docstring.
     - [\_count\_busy\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#_count_busy_workers): No docstring.
     - [\_count\_free\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#_count_free_workers): No docstring.

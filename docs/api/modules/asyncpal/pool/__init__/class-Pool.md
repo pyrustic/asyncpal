@@ -16,7 +16,7 @@ Here are fields exposed in the class:
 
 | Field | Value |
 | --- | --- |
-| \_abc\_impl | `<_abc_data object at 0x7f10d07066c0>` |
+| \_abc\_impl | `<_abc_data object at 0x7f710a1eda20>` |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -25,9 +25,7 @@ Here are properties exposed in the class:
 
 | Property | Methods | Description |
 | --- | --- | --- |
-| broken | _getter_ | No docstring. |
 | cancelled\_tasks | _getter_ | No docstring. |
-| closed | _getter_ | No docstring. |
 | final\_args | _getter_ | No docstring. |
 | final\_kwargs | _getter_ | No docstring. |
 | finalizer | _getter_ | No docstring. |
@@ -35,11 +33,13 @@ Here are properties exposed in the class:
 | init\_args | _getter_ | No docstring. |
 | init\_kwargs | _getter_ | No docstring. |
 | initializer | _getter_ | No docstring. |
+| is\_broken | _getter_ | No docstring. |
+| is\_closed | _getter_ | No docstring. |
+| is\_terminated | _getter_ | No docstring. |
 | max\_tasks\_per\_worker | _getter_ | No docstring. |
 | max\_workers | _getter_ | No docstring. |
 | mp\_context | _getter_ | No docstring. |
 | name | _getter_ | No docstring. |
-| terminated | _getter_ | No docstring. |
 | worker\_type | _getter_ | No docstring. |
 | workers | _getter_ | No docstring. |
 
@@ -56,16 +56,20 @@ Here are methods exposed in the class:
 - [join](#join)
 - [map](#map)
 - [map\_all](#map_all)
+- [map\_all\_unordered](#map_all_unordered)
+- [map\_unordered](#map_unordered)
 - [run](#run)
 - [shutdown](#shutdown)
 - [spawn\_max\_workers](#spawn_max_workers)
 - [spawn\_workers](#spawn_workers)
 - [starmap](#starmap)
 - [starmap\_all](#starmap_all)
+- [starmap\_all\_unordered](#starmap_all_unordered)
+- [starmap\_unordered](#starmap_unordered)
 - [submit](#submit)
 - [test](#test)
 - [\_cancel\_tasks](#_cancel_tasks)
-- [\_cleanup\_cached\_futures](#_cleanup_cached_futures)
+- [\_cleanup\_stored\_futures](#_cleanup_stored_futures)
 - [\_cleanup\_task\_queue](#_cleanup_task_queue)
 - [\_count\_busy\_workers](#_count_busy_workers)
 - [\_count\_free\_workers](#_count_free_workers)
@@ -190,7 +194,7 @@ that iterates over the results.
 Beware, a remote exception will be reraised here
 
 ```python
-def map(self, target, *iterables, chunk_size=1, buffer_size=1, ordered=True, timeout=None):
+def map(self, target, *iterables, chunk_size=1, buffer_size=1, keep_order=True, timeout=None):
     ...
 ```
 
@@ -200,7 +204,7 @@ def map(self, target, *iterables, chunk_size=1, buffer_size=1, ordered=True, tim
 | iterables | iterables to pass to the target |
 | chunk\_size | max length for a chunk |
 | buffer\_size | the buffer_size. A bigger size will consume more memory but the overall operation will be faster |
-| ordered | whether the original order should be kept or not |
+| keep\_order | whether the original order should be kept or not |
 | timeout | None or a timeout (int or float) value in seconds |
 
 ### Value to return
@@ -224,7 +228,7 @@ Using this method instead of the `map` method might cause high memory usage.
 Beware, a remote exception will be reraised here
 
 ```python
-def map_all(self, target, *iterables, chunk_size=1, ordered=True, timeout=None):
+def map_all(self, target, *iterables, chunk_size=1, keep_order=True, timeout=None):
     ...
 ```
 
@@ -233,7 +237,7 @@ def map_all(self, target, *iterables, chunk_size=1, ordered=True, timeout=None):
 | target | callable |
 | iterables | iterables to pass to the target |
 | chunk\_size | max length for a chunk |
-| ordered | whether the original order should be kept or not |
+| keep\_order | whether the original order should be kept or not |
 | timeout | None or a timeout (int or float) value in seconds |
 
 ### Value to return
@@ -247,6 +251,26 @@ The table below outlines exceptions that may occur.
 | RuntimeError | raised when the pool is closed |
 | BrokenPoolError | raised when the pool is broken |
 | Exception | any remote exception |
+
+<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
+
+## map\_all\_unordered
+Same as map with 'keep_order' set to False
+
+```python
+def map_all_unordered(self, target, *iterables, chunk_size=1, timeout=None):
+    ...
+```
+
+<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
+
+## map\_unordered
+Same as map with 'keep_order' set to False
+
+```python
+def map_unordered(self, target, *iterables, chunk_size=1, buffer_size=1, timeout=None):
+    ...
+```
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -324,7 +348,7 @@ that iterates over the results.
 Beware, a remote exception will be reraised here
 
 ```python
-def starmap(self, target, iterable, chunk_size=1, buffer_size=1, ordered=True, timeout=None):
+def starmap(self, target, iterable, chunk_size=1, buffer_size=1, keep_order=True, timeout=None):
     ...
 ```
 
@@ -334,7 +358,7 @@ def starmap(self, target, iterable, chunk_size=1, buffer_size=1, ordered=True, t
 | iterable | sequence of args to pass to the target |
 | chunk\_size | max length for a chunk |
 | buffer\_size | the buffer_size. A bigger size will consume more memory but the overall operation will be faster |
-| ordered | whether the original order should be kept or not |
+| keep\_order | whether the original order should be kept or not |
 | timeout | None or a timeout (int or float) value in seconds |
 
 ### Value to return
@@ -358,7 +382,7 @@ Using this method instead of the `map` method might cause high memory usage.
 Beware, a remote exception will be reraised here
 
 ```python
-def starmap_all(self, target, iterable, chunk_size=1, ordered=True, timeout=None):
+def starmap_all(self, target, iterable, chunk_size=1, keep_order=True, timeout=None):
     ...
 ```
 
@@ -367,7 +391,7 @@ def starmap_all(self, target, iterable, chunk_size=1, ordered=True, timeout=None
 | target | callable |
 | iterable | sequence of args to pass to the target |
 | chunk\_size | max length for a chunk |
-| ordered | whether the original order should be kept or not |
+| keep\_order | whether the original order should be kept or not |
 | timeout | None or a timeout (int or float) value in seconds |
 
 ### Value to return
@@ -381,6 +405,26 @@ The table below outlines exceptions that may occur.
 | RuntimeError | raised when the pool is closed |
 | BrokenPoolError | raised when the pool is broken |
 | Exception | any remote exception |
+
+<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
+
+## starmap\_all\_unordered
+Same as starmap_all with 'keep_order' set to False
+
+```python
+def starmap_all_unordered(self, target, iterable, chunk_size=1, timeout=None):
+    ...
+```
+
+<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
+
+## starmap\_unordered
+Same as starmap with 'keep_order' set to False
+
+```python
+def starmap_unordered(self, target, iterable, chunk_size=1, buffer_size=1, timeout=None):
+    ...
+```
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
@@ -432,11 +476,11 @@ def _cancel_tasks(self):
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
-## \_cleanup\_cached\_futures
+## \_cleanup\_stored\_futures
 No docstring
 
 ```python
-def _cleanup_cached_futures(self):
+def _cleanup_stored_futures(self):
     ...
 ```
 

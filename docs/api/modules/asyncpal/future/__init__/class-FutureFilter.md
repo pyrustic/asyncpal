@@ -14,7 +14,7 @@ You can also retrieve futures while feeding the filter.
 The original order of the futures doesn't matter here.
 
 This class is used by the `as_done` function when its
-ordered option is set to False.
+`keep_order` option is set to False.
 
 ## Properties table
 Here are properties exposed in the class:

@@ -16,14 +16,14 @@ Here are functions exposed in the module:
 Yields futures iteratively as they are done
 
 ```python
-def as_done(futures, ordered=False, timeout=None):
+def as_done(futures, keep_order=False, timeout=None):
     ...
 ```
 
 | Parameter | Description |
 | --- | --- |
 | futures | sequence of futures |
-| ordered | boolean to tell whether the results should be ordered or not |
+| keep\_order | boolean to tell whether the results should be ordered or not |
 | timeout | None or a timeout value (int or float) in seconds. |
 
 ### Exceptions table

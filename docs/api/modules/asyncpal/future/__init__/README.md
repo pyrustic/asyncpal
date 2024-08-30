@@ -19,16 +19,17 @@ classes as well as the `wait`, `collect`, and `as_done` functions
 - [**Future**](/docs/api/modules/asyncpal/future/__init__/class-Future.md): Future class
     - [callbacks](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
     - [cancel\_flag](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
-    - [cancelled](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
-    - [completed](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
-    - [done](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
     - [duration](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
     - [exception](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
-    - [failed](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
-    - [pending](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
+    - [is\_cancelled](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
+    - [is\_completed](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
+    - [is\_done](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
+    - [is\_failed](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
+    - [is\_pending](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
+    - [is\_running](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
     - [pool](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
     - [result](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
-    - [running](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
+    - [status](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
     - [task\_id](/docs/api/modules/asyncpal/future/__init__/class-Future.md#properties-table); _getter_
     - [add\_callback](/docs/api/modules/asyncpal/future/__init__/class-Future.md#add_callback): Add one callback that accepts the future as argument.
     - [add\_callbacks](/docs/api/modules/asyncpal/future/__init__/class-Future.md#add_callbacks): Add a sequence of callbacks that accept the future as argument.
@@ -50,5 +51,11 @@ classes as well as the `wait`, `collect`, and `as_done` functions
     - [populate](/docs/api/modules/asyncpal/future/__init__/class-FutureFilter.md#populate): Populate the filter
     - [put](/docs/api/modules/asyncpal/future/__init__/class-FutureFilter.md#put): Add a future to the filter
     - [\_get\_from\_queue](/docs/api/modules/asyncpal/future/__init__/class-FutureFilter.md#_get_from_queue): No docstring.
+- [**Status**](/docs/api/modules/asyncpal/future/__init__/class-Status.md): An enumeration.
+    - PENDING = `1`
+    - RUNNING = `2`
+    - COMPLETED = `3`
+    - FAILED = `4`
+    - CANCELLED = `5`
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>

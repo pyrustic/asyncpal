@@ -10,7 +10,7 @@ Here are fields exposed in the module:
 | --- | --- |
 | IDLE\_TIMEOUT | `60` |
 | LOGGER | `<Logger asyncpal (WARNING)>` |
-| MP\_CONTEXT | `<multiprocessing.context.SpawnContext object at 0x7f10d10269a0>` |
+| MP\_CONTEXT | `<multiprocessing.context.SpawnContext object at 0x7f710ab11b20>` |
 | WINDOWS\_MAX\_PROCESS\_WORKERS | `60` |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>

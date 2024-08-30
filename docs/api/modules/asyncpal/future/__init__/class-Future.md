@@ -17,16 +17,17 @@ Here are properties exposed in the class:
 | --- | --- | --- |
 | callbacks | _getter_ | No docstring. |
 | cancel\_flag | _getter_ | No docstring. |
-| cancelled | _getter_ | No docstring. |
-| completed | _getter_ | No docstring. |
-| done | _getter_ | No docstring. |
 | duration | _getter_ | No docstring. |
 | exception | _getter_ | No docstring. |
-| failed | _getter_ | No docstring. |
-| pending | _getter_ | No docstring. |
+| is\_cancelled | _getter_ | No docstring. |
+| is\_completed | _getter_ | No docstring. |
+| is\_done | _getter_ | No docstring. |
+| is\_failed | _getter_ | No docstring. |
+| is\_pending | _getter_ | No docstring. |
+| is\_running | _getter_ | No docstring. |
 | pool | _getter_ | No docstring. |
 | result | _getter_ | No docstring. |
-| running | _getter_ | No docstring. |
+| status | _getter_ | No docstring. |
 | task\_id | _getter_ | No docstring. |
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
