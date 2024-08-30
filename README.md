@@ -38,11 +38,11 @@
 **Asyncpal** is a [Python](https://www.python.org/) library designed for preemptive [concurrency](https://en.wikipedia.org/wiki/Concurrent_computing) and [parallelism](https://en.wikipedia.org/wiki/Parallel_computing). It achieves concurrency using the [thread pool](https://en.wikipedia.org/wiki/Thread_pool) design pattern that it extends with processes to enable parallelism.
 
 ## Designed for sporadic workloads
-Although a thread pool is the right tool for the problems it solves, its creation and usage involve the allocation of resources that must be properly released. For this reason, it is recommended to use a thread pool with a context manager to ensure that resources are properly released.
+Although a thread pool is the right tool for the problems it solves, its creation and usage involve the allocation of resources that must be properly released. For this reason, it is recommended to use a thread pool with a context manager to ensure that resources are properly released once the pool executor has finished the tasks.
 
 However, this strategy can introduce overhead in programs that sporadically submit tasks to a thread pool, as multiple pools may be created and destroyed throughout the execution of these programs.
 
-Maintaining one or a few thread pools for the entire duration of a program could be an effective solution, especially when the thread pool can automatically **shrink** after being idle for a short amount of time defined by the programmer.
+Maintaining one or a few thread pools for the duration of a program can be an effective solution, assuming these thread pools can automatically **shrink** after workers have been idle for a short period defined by the programmer.
 
 Asyncpal offers the ability to set an idle timeout for workers, allowing the pool to which they belong to shrink when they are not in use.
 
@@ -96,7 +96,7 @@ with ThreadPool(max_workers=5) as pool:
             print("%r page is %d bytes" % (url, len(data)))
 ```
 
-> The function `as_done` accepts a list of Future objects and also the `ordered` and `timeout` keyword arguments.
+> The function `as_done` accepts a list of Future objects and also the `keep_order` and `timeout` keyword arguments.
 
 ## Process pool example
 The following code snippet is adapted from [ProcessPoolExecutor example](https://docs.python.org/3/library/concurrent.futures.html#processpoolexecutor-example) provided by Python's concurrent.futures documentation [page](https://docs.python.org/3/library/concurrent.futures.html).
@@ -137,7 +137,7 @@ if __name__ == "__main__":
     main()
 ```
 
-> The method `map` also accepts these keyword arguments: `chunk_size`, `buffer_size`, `ordered`, and `timeout`.
+> The method `map` also accepts these keyword arguments: `chunk_size`, `buffer_size`, `keep_order`, and `timeout`.
 
 
 # Embarrassingly parallel workloads
@@ -158,25 +158,28 @@ with ThreadPool(4) as pool:
     numbers = range(100)
 
     # The 'map' method is lazy and slower than 'map_all'.
-    # Keyword arguments: chunk_size, buffer_size, ordered, timeout
+    # Keyword arguments: chunk_size, buffer_size, keep_order, timeout
     iterator = pool.map(add, numbers, numbers, chunk_size=25)
     assert tuple(iterator) == tuple(map(add, numbers, numbers))
 
     # For very long iterables, 'map_all' may cause high memory usage.
-    # Keyword arguments: chunk_size, ordered, timeout
+    # Keyword arguments: chunk_size, keep_order, timeout
     iterator = pool.map_all(add, numbers, numbers, chunk_size=25)
     assert tuple(iterator) == tuple(map(add, numbers, numbers))
 
     # The 'starmap' method is lazy and slower than 'starmap_all'.
-    # Keyword arguments: chunk_size, buffer_size, ordered, timeout
+    # Keyword arguments: chunk_size, buffer_size, keep_order, timeout
     iterator = pool.starmap(add, zip(numbers, numbers), chunk_size=25)
     assert tuple(iterator) == tuple(starmap(add, zip(numbers, numbers)))
 
     # For very long iterables, 'starmap_all' may cause high memory usage.
-    # Keyword arguments: chunk_size, ordered, timeout
+    # Keyword arguments: chunk_size, keep_order, timeout
     iterator = pool.starmap_all(add, zip(numbers, numbers), chunk_size=25)
     assert tuple(iterator) == tuple(starmap(add, zip(numbers, numbers)))
 ```
+
+> For convenience, there are also `map_unordered`, `map_all_unordered`, `starmap_unordered`, `starmap_all_unordered`.
+
 ## Useful functions
 The `split_map_task` and `split_starmap_task` functions allow to manually split a task into subtasks. There are also the `wait`, `collect` and `as_done` functions which are intended to be applied to sequences of Future objects.
 
@@ -211,7 +214,7 @@ with ThreadPool(4) as pool:
     assert tuple(result) == tuple(map(add, numbers, numbers))
 
     # We could've used 'as_done' to filter out futures as they are done.
-    # Note that by default, the keyword argument 'ordered' is False !
+    # Note that by default, the keyword argument 'keep_order' is False !
     for future in as_done(futures, timeout=42):
         pass
 ```
@@ -254,14 +257,18 @@ For convenience, the following four derived classes are provided:
 from asyncpal import ThreadPool
 from asyncpal.errors import BrokenPoolError, InitializerError, FinalizerError
 
+
 def add(x, y):
-    return x + y
+  return x + y
+
 
 def initializer(*args, **kwargs):
-    pass
+  pass
+
 
 def finalizer(*args, **kwargs):
-    pass
+  pass
+
 
 # all these arguments are optional
 pool = ThreadPool(max_workers=4, name="my-pool", idle_timeout=60,
@@ -273,17 +280,17 @@ future = pool.submit(add, 10, 2)
 
 # test the pool
 try:
-    pool.test()
+  pool.test()
 # exception coming from the initializer
 except InitializerError as e:
-    e.__cause__  # the cause
+  e.__cause__  # the cause
 # exception coming from the finalizer
 except FinalizerError:
-    pass
+  pass
 # exception coming from the initializer
 # or the finalizer
 except BrokenPoolError:
-    pass
+  pass
 
 # calling this will raise RuntimeError if the pool is closed
 # or BrokenPoolError (or its subclass)
@@ -302,7 +309,7 @@ pool.join(timeout=42)
 
 # gracefully shut down the pool
 pool.shutdown()
-assert pool.terminated
+assert pool.is_terminated
 # list of cancelled tasks
 pool.cancelled_tasks
 ```
@@ -333,47 +340,49 @@ A [Future](https://en.wikipedia.org/wiki/Futures_and_promises) object is not mea
 ```python
 from asyncpal import ThreadPool
 
+
 def divide(x, y):
-    return x // y
+  return x // y
+
 
 with ThreadPool(4) as pool:
-    # submit a task
-    future = pool.submit(divide, 10, 2)
+  # submit a task
+  future = pool.submit(divide, 10, 2)
 
-    # add a callback that accepts the future as argument
-    # and that will be called when the future is done
-    future.add_callback(lambda f: None)
+  # add a callback that accepts the future as argument
+  # and that will be called when the future is done
+  future.add_callback(lambda f: None)
 
-    # safely collect the result (by default, it blocks)
-    try:
-        # blocks (max 42s) until the Future is done
-        result = future.collect(timeout=42)
-    except ZeroDivisionError as e:
-        pass
-    else:
-        assert result == 5
+  # safely collect the result (by default, it blocks)
+  try:
+    # blocks (max 42s) until the Future is done
+    result = future.collect(timeout=42)
+  except ZeroDivisionError as e:
+    pass
+  else:
+    assert result == 5
 
-    # get duration (in seconds)
-    pending_time, running_time = future.duration
+  # get duration (in seconds)
+  pending_time, running_time = future.duration
 
-    # cancel the future (it is a bit too late, but ok)
-    future.cancel()
+  # cancel the future (it is a bit too late, but ok)
+  future.cancel()
 
-    # we could've waited for the Future to be done (it blocks)
-    future.wait(timeout=42)  # 42s !
+  # we could've waited for the Future to be done (it blocks)
+  future.wait(timeout=42)  # 42s !
 
-    # get the result (returns None if the Future isn't done)
-    result = future.result
-    # get the exception (returns None if the Future isn't done)
-    exc = future.exception
+  # get the result (returns None if the Future isn't done)
+  result = future.result
+  # get the exception (returns None if the Future isn't done)
+  exc = future.exception
 
-    # some useful properties
-    future.cancel_flag  # boolean set to True after cancel() is called
-    future.cancelled  # boolean that confirms cancellation
-    future.done  # is True when Completed, Cancelled, or Failed
-    future.pending  # True while task is pending
-    future.running  # True while task is running
-    # etc...
+  # some useful properties
+  future.cancel_flag  # boolean set to True after cancel() is called
+  future.is_cancelled  # boolean that confirms cancellation
+  future.is_done  # is True when Completed, Cancelled, or Failed
+  future.is_pending  # True while task is pending
+  future.is_running  # True while task is running
+  # etc...
 ```
 
 

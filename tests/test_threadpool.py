@@ -45,7 +45,7 @@ class TestBrokenPool(unittest.TestCase):
             self.assertIsInstance(worker_exception, errors.InitializerError)
             self.assertIsInstance(worker_exception, errors.BrokenPoolError)
             self.assertIsInstance(worker_exception.__cause__, ZeroDivisionError)
-            self.assertTrue(pool.broken)
+            self.assertTrue(pool.is_broken)
 
     def test_after_shutdown_with_pool_broken_by_initializer(self):
         with ThreadPool(initializer=funcs.divide, init_args=(1, 0)) as pool:
@@ -73,7 +73,7 @@ class TestBrokenPool(unittest.TestCase):
             self.assertIsInstance(worker_exception, errors.FinalizerError)
             self.assertIsInstance(worker_exception, errors.BrokenPoolError)
             self.assertIsInstance(worker_exception.__cause__, ZeroDivisionError)
-            self.assertTrue(pool.broken)
+            self.assertTrue(pool.is_broken)
 
     def test_after_shutdown_with_pool_broken_by_finalizer(self):
         with ThreadPool(finalizer=funcs.divide, final_args=(1, 0)) as pool:
@@ -92,7 +92,7 @@ class TestBrokenPool(unittest.TestCase):
             pool.join()
             worker_exception = funcs.get_worker_exception(pool)
             self.assertIsInstance(worker_exception.__cause__, TypeError)
-            self.assertTrue(pool.broken)
+            self.assertTrue(pool.is_broken)
 
 
 class TestCheckMethod(unittest.TestCase):
@@ -201,19 +201,19 @@ class TestProperties(unittest.TestCase):
 
     def test_closed_property(self):
         with ThreadPool() as pool:
-            self.assertFalse(pool.closed)
-        self.assertTrue(pool.closed)
+            self.assertFalse(pool.is_closed)
+        self.assertTrue(pool.is_closed)
 
     def test_terminated_property(self):
         with ThreadPool() as pool:
-            self.assertFalse(pool.terminated)
-        self.assertTrue(pool.terminated)
+            self.assertFalse(pool.is_terminated)
+        self.assertTrue(pool.is_terminated)
 
     def test_broken_property(self):
         with ThreadPool(initializer=funcs.divide, init_args=(1, 0)) as pool:
-            self.assertFalse(pool.broken)
+            self.assertFalse(pool.is_broken)
             pool.spawn_workers(1)
-        self.assertTrue(pool.broken)
+        self.assertTrue(pool.is_broken)
 
 
 class TestLazyMapMethod(unittest.TestCase):
@@ -244,7 +244,7 @@ class TestLazyMapMethod(unittest.TestCase):
         with ThreadPool(max_workers=4) as pool:
             r = tuple(pool.map(funcs.square, range(3),
                                (0.1, 0.06, 0.02),
-                               ordered=False, buffer_size=3))
+                               keep_order=False, buffer_size=3))
             expected = tuple(map(funcs.square, (2, 1, 0)))
             self.assertEqual(expected, r)
             self.assertEqual(3, pool.count_workers())
@@ -284,7 +284,7 @@ class TestEagerMapMethod(unittest.TestCase):
         with ThreadPool(max_workers=4) as pool:
             r = tuple(pool.map_all(funcs.square, range(3),
                                    (0.1, 0.06, 0.02),
-                                   ordered=False))
+                                   keep_order=False))
             expected = tuple(map(funcs.square, (2, 1, 0)))
             self.assertEqual(expected, r)
             self.assertEqual(3, pool.count_workers())
@@ -332,7 +332,7 @@ class TestLazyStarmapMethod(unittest.TestCase):
         with ThreadPool(max_workers=4) as pool:
             r = tuple(pool.starmap(funcs.add, zip(range(3), range(3),
                                                   (0.1, 0.06, 0.02)),
-                                   ordered=False, buffer_size=3))
+                                   keep_order=False, buffer_size=3))
             expected = tuple(itertools.starmap(funcs.add,
                                                [(2, 2), (1, 1), (0, 0)]))
             self.assertEqual(expected, r)
@@ -373,7 +373,7 @@ class TestEagerStarmapMethod(unittest.TestCase):
         with ThreadPool(max_workers=4) as pool:
             r = tuple(pool.starmap_all(funcs.add, zip(range(3), range(3),
                                                       (0.1, 0.06, 0.02)),
-                                       ordered=False))
+                                       keep_order=False))
             expected = tuple(itertools.starmap(funcs.add,
                                                [(2, 2), (1, 1), (0, 0)]))
             self.assertEqual(expected, r)

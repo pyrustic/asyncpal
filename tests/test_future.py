@@ -95,8 +95,8 @@ class TestCancelMethod(unittest.TestCase):
             time.sleep(0.001)
             future_1.cancel()
             future_2.cancel()
-        self.assertFalse(future_1.cancelled)
-        self.assertTrue(future_2.cancelled)
+        self.assertFalse(future_1.is_cancelled)
+        self.assertTrue(future_2.is_cancelled)
 
 
 class TestCallbacks(unittest.TestCase):
@@ -168,55 +168,55 @@ class TestProperties(unittest.TestCase):
             future_1 = pool.submit(funcs.add, 1, 2, sleep=0.1)
             future_2 = pool.submit(funcs.add, 1, 2)
             future_3 = pool.submit(funcs.add, 1, 2)
-            self.assertFalse(future_1.pending)
-            self.assertTrue(future_2.pending)
-            self.assertTrue(future_3.pending)
-        self.assertFalse(future_1.pending)
-        self.assertFalse(future_2.pending)
-        self.assertFalse(future_3.pending)
+            self.assertFalse(future_1.is_pending)
+            self.assertTrue(future_2.is_pending)
+            self.assertTrue(future_3.is_pending)
+        self.assertFalse(future_1.is_pending)
+        self.assertFalse(future_2.is_pending)
+        self.assertFalse(future_3.is_pending)
 
     def test_running_property(self):
         with ThreadPool(max_workers=1) as pool:
             future_1 = pool.submit(funcs.add, 1, 2, sleep=0.1)
             future_2 = pool.submit(funcs.add, 1, 2)
             future_3 = pool.submit(funcs.add, 1, 2)
-            self.assertTrue(future_1.running)
-            self.assertFalse(future_2.running)
-            self.assertFalse(future_3.running)
-        self.assertFalse(future_1.running)
-        self.assertFalse(future_2.running)
-        self.assertFalse(future_3.running)
+            self.assertTrue(future_1.is_running)
+            self.assertFalse(future_2.is_running)
+            self.assertFalse(future_3.is_running)
+        self.assertFalse(future_1.is_running)
+        self.assertFalse(future_2.is_running)
+        self.assertFalse(future_3.is_running)
 
     def test_completed_property(self):
         with ThreadPool(max_workers=1) as pool:
             future_1 = pool.submit(funcs.add, 1, 2, sleep=0.1)
             future_2 = pool.submit(funcs.add, 1, 2)
             future_3 = pool.submit(funcs.add, 1, 2)
-            self.assertFalse(future_1.completed)
-            self.assertFalse(future_2.completed)
-            self.assertFalse(future_3.completed)
+            self.assertFalse(future_1.is_completed)
+            self.assertFalse(future_2.is_completed)
+            self.assertFalse(future_3.is_completed)
             future_1.wait()
             future_2.wait()
             future_3.wait()
-        self.assertTrue(future_1.completed)
-        self.assertTrue(future_2.completed)
-        self.assertTrue(future_3.completed)
+        self.assertTrue(future_1.is_completed)
+        self.assertTrue(future_2.is_completed)
+        self.assertTrue(future_3.is_completed)
 
     def test_failed_property(self):
         with ThreadPool(max_workers=1) as pool:
             future_1 = pool.submit(funcs.divide, 1, 0, sleep=0.1)
-            self.assertFalse(future_1.failed)
+            self.assertFalse(future_1.is_failed)
             future_1.wait()
-            self.assertTrue(future_1.failed)
+            self.assertTrue(future_1.is_failed)
 
     def test_cancelled_property(self):
         with ThreadPool(max_workers=1) as pool:
             future_1 = pool.submit(funcs.add, 1, 2, sleep=0.1)
             future_2 = pool.submit(funcs.add, 1, 2)
-            self.assertFalse(future_1.cancelled)
-            self.assertFalse(future_2.cancelled)
-        self.assertFalse(future_1.cancelled)
-        self.assertTrue(future_2.cancelled)  # task_2 got cancelled as the pool shut down...
+            self.assertFalse(future_1.is_cancelled)
+            self.assertFalse(future_2.is_cancelled)
+        self.assertFalse(future_1.is_cancelled)
+        self.assertTrue(future_2.is_cancelled)  # task_2 got cancelled as the pool shut down...
 
     def test_cancel_flag(self):
         with ThreadPool(max_workers=1) as pool:
@@ -230,18 +230,18 @@ class TestProperties(unittest.TestCase):
             future_2 = pool.submit(funcs.add, 1, 2)
             time.sleep(0.1)
             future_3 = pool.submit(funcs.add, 1, 2)
-            self.assertTrue(future_1.done)
-            self.assertTrue(future_2.done)
-            self.assertFalse(future_3.done)
+            self.assertTrue(future_1.is_done)
+            self.assertTrue(future_2.is_done)
+            self.assertFalse(future_3.is_done)
         # failed (ZeroDivisionError), yet done
-        self.assertTrue(future_1.failed)
-        self.assertTrue(future_1.done)
+        self.assertTrue(future_1.is_failed)
+        self.assertTrue(future_1.is_done)
         # completed, yet done
-        self.assertTrue(future_2.completed)
-        self.assertTrue(future_2.done)
+        self.assertTrue(future_2.is_completed)
+        self.assertTrue(future_2.is_done)
         # cancelled (pool had to shut down quick), yet done
-        self.assertTrue(future_3.cancelled)
-        self.assertTrue(future_3.done)
+        self.assertTrue(future_3.is_cancelled)
+        self.assertTrue(future_3.is_done)
 
     def test_result_property(self):
         with ThreadPool(max_workers=1) as pool:
@@ -311,7 +311,7 @@ class TestAsDoneFunction(unittest.TestCase):
             future_2 = pool.submit(funcs.add, 1, 2)
             future_3 = pool.submit(funcs.add, 2, 3)
             futures = (future_1, future_2, future_3)
-            it = as_done(futures, ordered=True)  # keep_order defaults to False
+            it = as_done(futures, keep_order=True)  # keep_order defaults to False
             r = [future.collect() for future in it]
             expected = [1, 3, 5]
             self.assertEqual(expected, r)
@@ -322,7 +322,7 @@ class TestAsDoneFunction(unittest.TestCase):
             future_2 = pool.submit(funcs.add, 1, 2, sleep=0.1)
             future_3 = pool.submit(funcs.add, 2, 3)
             futures = (future_1, future_2, future_3)
-            it = as_done(futures, ordered=False)  # keep_order defaults to False
+            it = as_done(futures, keep_order=False)  # keep_order defaults to False
             r = [future.collect() for future in it]
             expected = [5, 3, 1]
             self.assertEqual(expected, r)
@@ -333,7 +333,7 @@ class TestAsDoneFunction(unittest.TestCase):
             future_2 = pool.submit(funcs.add, 1, 2)
             future_3 = pool.submit(funcs.add, 2, 3)
             futures = (future_1, future_2, future_3)
-            it = as_done(futures, ordered=True, timeout=1)
+            it = as_done(futures, keep_order=True, timeout=1)
             r = [future.collect() for future in it]
             expected = [1, 3, 5]
             self.assertEqual(expected, r)
@@ -345,7 +345,7 @@ class TestAsDoneFunction(unittest.TestCase):
             future_3 = pool.submit(funcs.add, 2, 3, sleep=0.1)
             futures = (future_1, future_2, future_3)
             with self.assertRaises(TimeoutError):
-                tuple(as_done(futures, ordered=True, timeout=0.05))
+                tuple(as_done(futures, keep_order=True, timeout=0.05))
 
 
 class TestWaitFunction(unittest.TestCase):

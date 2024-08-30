@@ -2,7 +2,7 @@
 from asyncpal.pool import IDLE_TIMEOUT
 from asyncpal.misc import (LOGGER, get_chunks, split_map_task,
                            split_starmap_task, Countdown)
-from asyncpal.future import Future, FutureFilter, as_done, wait, collect
+from asyncpal.future import Future, FutureFilter, Status, as_done, wait, collect
 from asyncpal.pool.threadpool import (Pool, ThreadPool, SingleThreadPool,
                                       DualThreadPool, TripleThreadPool,
                                       QuadThreadPool)
@@ -20,7 +20,7 @@ __all__ = ["Pool", "ThreadPool", "ProcessPool",
            "DualThreadPool", "DualProcessPool",
            "TripleThreadPool", "TripleProcessPool",
            "QuadThreadPool", "QuadProcessPool",
-           "Future", "FutureFilter", "Countdown",
+           "Future", "FutureFilter", "Status", "Countdown",
            "as_done", "wait", "collect", "split_map_task",
            "split_starmap_task", "get_chunks",
            "IDLE_TIMEOUT", "MP_CONTEXT", "LOGGER",

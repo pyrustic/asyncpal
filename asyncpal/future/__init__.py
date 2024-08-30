@@ -8,7 +8,7 @@ from queue import SimpleQueue, Empty as EmptyQueue
 from asyncpal import errors, misc
 
 
-__all__ = ["Future", "FutureFilter", "wait", "collect", "as_done"]
+__all__ = ["Future", "FutureFilter", "Status", "wait", "collect", "as_done"]
 
 
 def wait(futures, timeout=None):
@@ -62,19 +62,19 @@ def collect(futures, timeout=None):
     return tuple(result)
 
 
-def as_done(futures, ordered=False, timeout=None):
+def as_done(futures, keep_order=False, timeout=None):
     """
     Yields futures iteratively as they are done
 
     [param]
     - futures: sequence of futures
-    - ordered: boolean to tell whether the results should be ordered or not
+    - keep_order: boolean to tell whether the results should be ordered or not
     - timeout: None or a timeout value (int or float) in seconds.
 
     [except]
     - TimeoutError: raised when timeout expires
     """
-    if ordered:
+    if keep_order:
         countdown = misc.Countdown(timeout)
         for future in futures:
             if timeout is None:
@@ -97,7 +97,7 @@ class FutureFilter:
     The original order of the futures doesn't matter here.
 
     This class is used by the `as_done` function when its
-    ordered option is set to False.
+    `keep_order` option is set to False.
     """
 
     def __init__(self, futures=None):
@@ -214,32 +214,32 @@ class Future:
         return self._task_id
 
     @property
-    def pending(self):
+    def is_pending(self):
         with self._mutex:
             return True if self._status == Status.PENDING else False
 
     @property
-    def running(self):
+    def is_running(self):
         with self._mutex:
             return True if self._status == Status.RUNNING else False
 
     @property
-    def completed(self):
+    def is_completed(self):
         with self._mutex:
             return True if self._status == Status.COMPLETED else False
 
     @property
-    def failed(self):
+    def is_failed(self):
         with self._mutex:
             return True if self._status == Status.FAILED else False
 
     @property
-    def cancelled(self):
+    def is_cancelled(self):
         with self._mutex:
             return True if self._status == Status.CANCELLED else False
 
     @property
-    def done(self):
+    def is_done(self):
         with self._mutex:
             return self._is_done
 
@@ -269,6 +269,11 @@ class Future:
     def cancel_flag(self):
         with self._mutex:
             return self._cancel_flag
+
+    @property
+    def status(self):
+        with self._mutex:
+            return self._status
 
     def collect(self, timeout=None):
         """

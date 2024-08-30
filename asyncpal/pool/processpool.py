@@ -111,7 +111,7 @@ class ProcessPool(Pool):
                     raise e
             except BaseException as e:
                 with self._vars_lock:
-                    self._cached_exception = e
+                    self._stored_exception = e
                 raise e
             # message_queue.get might block too long, not giving time to free resource
             # pointed to by 'message', therefore let's free resource as soon as possible
@@ -123,7 +123,7 @@ class ProcessPool(Pool):
         # that works only for Process Workers to dispatch results/notifs
         tag, task_id = message[0:2]
         with self._futures_lock:
-            future = self._cached_futures[task_id]
+            future = self._stored_futures[task_id]
         if tag == MessageTag.RUNNING:
             instant = message[2]
             future.set_status(Status.RUNNING, instant)
@@ -135,7 +135,7 @@ class ProcessPool(Pool):
             future.set_exception(exception, instant)
         if tag in (MessageTag.RESULT, MessageTag.EXCEPTION):
             with self._futures_lock:
-                del self._cached_futures[task_id]
+                del self._stored_futures[task_id]
 
     def __reduce__(self):
         msg = "A pool object cannot be pickled"

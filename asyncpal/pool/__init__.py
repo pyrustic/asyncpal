@@ -58,12 +58,12 @@ class Pool(ABC):
         #
         self._workers = dict()
         self._inactive_workers = list()
-        self._cached_futures = dict()
-        self._broken = False
+        self._stored_futures = dict()
+        self._is_broken = False
         self._cancelled_tasks = list()
-        self._closed = threading.Event()
-        self._terminated = False
-        self._cached_exception = None
+        self._is_closed = threading.Event()
+        self._is_terminated = False
+        self._stored_exception = None
         self._monotonic_worker_count = 0
         self._monotonic_task_count = 0
         self._setup()
@@ -140,18 +140,18 @@ class Pool(ABC):
             return tuple(self._cancelled_tasks)
 
     @property
-    def closed(self):
-        return self._closed.is_set()
+    def is_closed(self):
+        return self._is_closed.is_set()
 
     @property
-    def terminated(self):
+    def is_terminated(self):
         with self._vars_lock:
-            return self._terminated
+            return self._is_terminated
 
     @property
-    def broken(self):
+    def is_broken(self):
         with self._vars_lock:
-            return self._broken
+            return self._is_broken
 
     def check(self):
         """
@@ -161,7 +161,7 @@ class Pool(ABC):
         - RuntimeError: raised if the pool is closed
         - BrokenPoolError: raised if the pool is broken
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
 
@@ -180,7 +180,7 @@ class Pool(ABC):
         - BrokenPoolError: raised when the pool is broken
         - Exception: exception that might be raised by the task itself
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
@@ -201,14 +201,14 @@ class Pool(ABC):
         - BrokenPoolError: raised when the pool is broken
         - Exception: exception that might be raised by the task itself
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
             return self._submit_task(target, *args, **kwargs)
 
     def map(self, target, *iterables, chunk_size=1, buffer_size=1,
-            ordered=True, timeout=None):
+            keep_order=True, timeout=None):
         """
         Perform a Map operation lazily and return an iterator
         that iterates over the results.
@@ -220,7 +220,7 @@ class Pool(ABC):
         - chunk_size: max length for a chunk
         - buffer_size: the buffer_size. A bigger size will consume more memory
             but the overall operation will be faster
-        - ordered: whether the original order should be kept or not
+        - keep_order: whether the original order should be kept or not
         - timeout: None or a timeout (int or float) value in seconds
 
         [return]
@@ -231,11 +231,11 @@ class Pool(ABC):
         - BrokenPoolError: raised when the pool is broken
         - Exception: any remote exception
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
-            if chunk_size == 1 and ordered:
+            if chunk_size == 1 and keep_order:
                 return self._map_lazy(target, zip(*iterables),
                                       buffer_size=buffer_size,
                                       timeout=timeout)
@@ -243,7 +243,7 @@ class Pool(ABC):
                 return self._map_lazy_unordered(target, zip(*iterables),
                                                 buffer_size=buffer_size,
                                                 timeout=timeout)
-            elif ordered:
+            elif keep_order:
                 return self._map_lazy_chunked(target, zip(*iterables),
                                               chunk_size=chunk_size,
                                               buffer_size=buffer_size,
@@ -254,7 +254,16 @@ class Pool(ABC):
                                                         buffer_size=buffer_size,
                                                         timeout=timeout)
 
-    def map_all(self, target, *iterables, chunk_size=1, ordered=True, timeout=None):
+    def map_unordered(self, target, *iterables,
+                      chunk_size=1, buffer_size=1,
+                      timeout=None):
+        """Same as map with 'keep_order' set to False"""
+        return self.map(target, *iterables, chunk_size=chunk_size,
+                        buffer_size=buffer_size, keep_order=False,
+                        timeout=timeout)
+
+    def map_all(self, target, *iterables, chunk_size=1,
+                keep_order=True, timeout=None):
         """
         Perform a Map operation eagerly and return an iterator
         that iterates over the results.
@@ -265,7 +274,7 @@ class Pool(ABC):
         - target: callable
         - iterables: iterables to pass to the target
         - chunk_size: max length for a chunk
-        - ordered: whether the original order should be kept or not
+        - keep_order: whether the original order should be kept or not
         - timeout: None or a timeout (int or float) value in seconds
 
         [return]
@@ -276,22 +285,28 @@ class Pool(ABC):
         - BrokenPoolError: raised when the pool is broken
         - Exception: any remote exception
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
             if chunk_size == 1:
                 return self._map_eager(target, zip(*iterables),
-                                       keep_order=ordered,
+                                       keep_order=keep_order,
                                        timeout=timeout)
             else:
                 return self._map_eager_chunked(target, zip(*iterables),
                                                chunk_size=chunk_size,
-                                               keep_order=ordered,
+                                               keep_order=keep_order,
                                                timeout=timeout)
 
+    def map_all_unordered(self, target, *iterables, chunk_size=1,
+                         timeout=None):
+        """Same as map with 'keep_order' set to False"""
+        return self.map_all(target, *iterables, chunk_size=chunk_size,
+                            keep_order=False, timeout=timeout)
+
     def starmap(self, target, iterable, chunk_size=1, buffer_size=1,
-                ordered=True, timeout=None):
+                keep_order=True, timeout=None):
         """
         Perform a Starmap operation lazily and return an iterator
         that iterates over the results.
@@ -303,7 +318,7 @@ class Pool(ABC):
         - chunk_size: max length for a chunk
         - buffer_size: the buffer_size. A bigger size will consume more memory
             but the overall operation will be faster
-        - ordered: whether the original order should be kept or not
+        - keep_order: whether the original order should be kept or not
         - timeout: None or a timeout (int or float) value in seconds
 
         [return]
@@ -314,11 +329,11 @@ class Pool(ABC):
         - BrokenPoolError: raised when the pool is broken
         - Exception: any remote exception
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
-            if chunk_size == 1 and ordered:
+            if chunk_size == 1 and keep_order:
                 return self._map_lazy(target, iterable,
                                       buffer_size=buffer_size,
                                       timeout=timeout)
@@ -326,7 +341,7 @@ class Pool(ABC):
                 return self._map_lazy_unordered(target, iterable,
                                                 buffer_size=buffer_size,
                                                 timeout=timeout)
-            elif ordered:
+            elif keep_order:
                 return self._map_lazy_chunked(target, iterable,
                                               chunk_size=chunk_size,
                                               buffer_size=buffer_size,
@@ -337,8 +352,15 @@ class Pool(ABC):
                                                         buffer_size=buffer_size,
                                                         timeout=timeout)
 
+    def starmap_unordered(self, target, iterable, chunk_size=1,
+                          buffer_size=1, timeout=None):
+        """Same as starmap with 'keep_order' set to False"""
+        return self.starmap(target, iterable, chunk_size=chunk_size,
+                            buffer_size=buffer_size, keep_order=False,
+                            timeout=timeout)
+
     def starmap_all(self, target, iterable, chunk_size=1,
-                    ordered=True, timeout=None):
+                    keep_order=True, timeout=None):
         """
         Perform a Starmap operation eagerly and return an iterator
         that iterates over the results.
@@ -349,7 +371,7 @@ class Pool(ABC):
         - target: callable
         - iterable: sequence of args to pass to the target
         - chunk_size: max length for a chunk
-        - ordered: whether the original order should be kept or not
+        - keep_order: whether the original order should be kept or not
         - timeout: None or a timeout (int or float) value in seconds
 
         [return]
@@ -360,26 +382,32 @@ class Pool(ABC):
         - BrokenPoolError: raised when the pool is broken
         - Exception: any remote exception
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
             if chunk_size == 1:
                 return self._map_eager(target, iterable,
-                                       keep_order=ordered,
+                                       keep_order=keep_order,
                                        timeout=timeout)
             else:
                 return self._map_eager_chunked(target, iterable,
                                                chunk_size=chunk_size,
-                                               keep_order=ordered,
+                                               keep_order=keep_order,
                                                timeout=timeout)
+
+    def starmap_all_unordered(self, target, iterable, chunk_size=1,
+                              timeout=None):
+        """Same as starmap_all with 'keep_order' set to False"""
+        return self.starmap_all(target, iterable, chunk_size=chunk_size,
+                                keep_order=False, timeout=timeout)
 
     def test(self):
         """Test the pool by creating another pool with the same config
         and doing some computation on it to ensure that it won't break.
         This method might raise a BrokenPoolError exception
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         kwargs = {"max_workers": 1,
@@ -422,7 +450,7 @@ class Pool(ABC):
         [return]
         Returns the number of spawned workers
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
@@ -430,7 +458,7 @@ class Pool(ABC):
 
     def spawn_max_workers(self):
         """Spawn the maximum number of workers"""
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             raise RuntimeError
         self._ensure_pool_integrity()
         with self._pool_lock:
@@ -438,28 +466,28 @@ class Pool(ABC):
 
     def count_workers(self):
         """Returns the number of workers that are alive"""
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             return 0
         with self._pool_lock:
             return self._count_workers()
 
     def count_busy_workers(self):
         """Returns the number of busy workers"""
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             return 0
         with self._pool_lock:
             return self._count_busy_workers()
 
     def count_free_workers(self):
         """Returns the number of free workers"""
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             return 0
         with self._pool_lock:
             return self._count_free_workers()
 
     def count_pending_tasks(self):
         """Returns the number of pending tasks"""
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             return 0
         with self._pool_lock:
             return self._count_pending_tasks()
@@ -474,13 +502,13 @@ class Pool(ABC):
         [except]
         - RuntimeError: raised when timeout expires
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             return False
-        self._closed.set()
+        self._is_closed.set()
         with self._pool_lock:
             self._notify_workers_to_shutdown()
             r = self._join_workers(timeout)
-        self._closed.clear()
+        self._is_closed.clear()
         return r
 
     def shutdown(self):
@@ -491,10 +519,10 @@ class Pool(ABC):
         [return]
         Returns False if the pool has already been closed, else returns True.
         """
-        if self._closed.is_set():
+        if self._is_closed.is_set():
             return False
         with self._pool_lock:
-            self._closed.set()
+            self._is_closed.set()
             self._cancel_tasks()
             self._notify_workers_to_shutdown()
             self._join_workers()
@@ -502,10 +530,10 @@ class Pool(ABC):
             if self._worker_type == WorkerType.PROCESS:
                 self._shutdown_filter_thread()
                 self._shutdown_message_thread()
-            self._cleanup_cached_futures()
+            self._cleanup_stored_futures()
             self._workers = dict()
-            self._terminated = True
-            self._cached_exception = None
+            self._is_terminated = True
+            self._stored_exception = None
             GlobalShutdown.deregister(self.shutdown)
             return True
 
@@ -572,12 +600,12 @@ class Pool(ABC):
 
     def _ensure_pool_integrity(self):
         with self._vars_lock:
-            if self._cached_exception is None:
+            if self._stored_exception is None:
                 return
-            if isinstance(self._cached_exception, errors.BrokenPoolError):
-                raise self._cached_exception
+            if isinstance(self._stored_exception, errors.BrokenPoolError):
+                raise self._stored_exception
             else:
-                raise errors.BrokenPoolError from self._cached_exception
+                raise errors.BrokenPoolError from self._stored_exception
 
     @abstractmethod
     def _create_worker(self):
@@ -591,7 +619,7 @@ class Pool(ABC):
         future.set_status(Status.PENDING)
         if self._worker_type == WorkerType.PROCESS:
             with self._futures_lock:
-                self._cached_futures[task_id] = future
+                self._stored_futures[task_id] = future
         task = (future, target, args, kwargs)
         self._task_queue.put(task)
         # ensure workers
@@ -689,7 +717,7 @@ class Pool(ABC):
             if future.cancel_flag:
                 future.set_status(Status.CANCELLED)
                 with self._futures_lock:
-                    del self._cached_futures[future.task_id]
+                    del self._stored_futures[future.task_id]
                 continue
             task = (future.task_id, target, args, kwargs)
             self._mp_task_queue.put(task, block=True, timeout=None)
@@ -706,7 +734,7 @@ class Pool(ABC):
             else:
                 self._inactive_workers.append(worker)
                 del self._workers[worker_id]
-        if not self._closed.is_set():
+        if not self._is_closed.is_set():
             self._spawn_workers()
 
     def _on_worker_exception(self, worker_id, exc):
@@ -719,11 +747,11 @@ class Pool(ABC):
                 self._inactive_workers.append(worker)
                 del self._workers[worker_id]
         with self._vars_lock:
-            if self._cached_exception is None:
+            if self._stored_exception is None:
                 self._cancel_tasks()
                 self._notify_workers_to_shutdown()
-            self._cached_exception = exc
-            self._broken = True
+            self._stored_exception = exc
+            self._is_broken = True
 
     def _notify_workers_to_shutdown(self):
         n = self._count_workers()
@@ -746,7 +774,7 @@ class Pool(ABC):
             for future in futures:
                 future.set_status(Status.CANCELLED)
                 try:
-                    del self._cached_futures[future.task_id]
+                    del self._stored_futures[future.task_id]
                 except KeyError as e:
                     pass
 
@@ -775,7 +803,7 @@ class Pool(ABC):
         with self._futures_lock:
             for task_id in task_ids:
                 try:
-                    future = self._cached_futures[task_id]
+                    future = self._stored_futures[task_id]
                 except KeyError as e:
                     pass
                 else:
@@ -823,10 +851,10 @@ class Pool(ABC):
             self._mp_task_queue.close()
             self._mp_task_queue.join_thread()
 
-    def _cleanup_cached_futures(self):
+    def _cleanup_stored_futures(self):
         with self._futures_lock:
-            futures = self._cached_futures.values()
-            self._cached_futures = dict()
+            futures = self._stored_futures.values()
+            self._stored_futures = dict()
         for future in futures:
             future.set_status(Status.CANCELLED)
 
@@ -841,13 +869,13 @@ class Pool(ABC):
 
 
 def _collect_batched_results(futures, keep_order=True, timeout=None):
-    for future in as_done(futures, ordered=keep_order, timeout=timeout):
+    for future in as_done(futures, keep_order=keep_order, timeout=timeout):
         for value in future.collect():
             yield value
 
 
 def _collect_results(futures, keep_order=True, timeout=None):
-    for future in as_done(futures, ordered=keep_order, timeout=timeout):
+    for future in as_done(futures, keep_order=keep_order, timeout=timeout):
         yield future.collect()
 
 
