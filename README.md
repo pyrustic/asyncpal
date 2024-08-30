@@ -378,10 +378,10 @@ with ThreadPool(4) as pool:
 
   # some useful properties
   future.cancel_flag  # boolean set to True after cancel() is called
-  future.is_cancelled  # boolean that confirms cancellation
-  future.is_done  # is True when Completed, Cancelled, or Failed
-  future.is_pending  # True while task is pending
-  future.is_running  # True while task is running
+  future.is_cancelled # boolean that confirms cancellation
+  future.is_done      # True when Completed, Cancelled, or Failed
+  future.is_pending   # True while task is pending
+  future.is_running   # True while task is running
   # etc...
 ```
 
