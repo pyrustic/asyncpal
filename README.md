@@ -222,7 +222,7 @@ with ThreadPool(4) as pool:
 # Initializers, finalizers, and the BrokenPoolError exception
 At the creation of a pool, the programmer can provide an initializer and/or a finalizer. Consequently, each time the pool spawns a worker (whether it is a thread or a process), the initializer is executed at startup, and the finalizer is executed right before the worker shuts down.
 
-Any exception raised during initialization, finalization, or in between will be caught by the pool, which will then enter a "broken" state. Once the pool is broken, it will shut down other workers, cancel pending tasks, and make them available via the `cancelled_tasks` property. It will also raise a BrokenPoolError exception whenever the programmer attempts to submit new tasks. 
+Any exception raised during initialization, finalization, or in between will be caught by the pool, which will then enter a "broken" state. Once the pool is broken, it will shut down other workers, cancel pending tasks, and make them available via the `cancelled_tasks` property. It will also raise a `BrokenPoolError` exception whenever the programmer attempts to submit new tasks. 
 
 Asyncpal offers a way to reduce the risk of encountering a `BrokenPoolError` exception at an inconvenient time by testing the pool beforehand. All pool classes provide a `test` method that replicate the pool with its configuration, perform some computation on it, then close it, letting any exception propagate to the top.
 
