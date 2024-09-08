@@ -10,14 +10,14 @@ as well as the GlobalShutdown class.
 ## Fields
 - [**All fields**](/docs/api/modules/asyncpal/pool/__init__/fields.md)
     - IDLE\_TIMEOUT = `60`
-    - MP\_CONTEXT = `<multiprocessing.context.SpawnContext object at 0x7f710ab11b20>`
+    - MP\_CONTEXT = `<multiprocessing.context.SpawnContext object at 0x7f7882f6cb20>`
     - WINDOWS\_MAX\_PROCESS\_WORKERS = `60`
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 
 ## Classes
 - [**Pool**](/docs/api/modules/asyncpal/pool/__init__/class-Pool.md): Helper class that provides a standard way to create an ABC using inheritance.
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/__init__/class-Pool.md#fields-table) = `<_abc_data object at 0x7f710a1eda20>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/__init__/class-Pool.md#fields-table) = `<_abc_data object at 0x7f788264bdb0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/__init__/class-Pool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/__init__/class-Pool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/__init__/class-Pool.md#properties-table); _getter_

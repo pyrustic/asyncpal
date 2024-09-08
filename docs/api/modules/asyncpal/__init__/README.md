@@ -10,7 +10,7 @@ All public Classes, Functions, and Constants
 - [**All fields**](/docs/api/modules/asyncpal/__init__/fields.md)
     - IDLE\_TIMEOUT = `60`
     - LOGGER = `<Logger asyncpal (WARNING)>`
-    - MP\_CONTEXT = `<multiprocessing.context.SpawnContext object at 0x7f710ab11b20>`
+    - MP\_CONTEXT = `<multiprocessing.context.SpawnContext object at 0x7f7882f6cb20>`
     - WINDOWS\_MAX\_PROCESS\_WORKERS = `60`
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
@@ -20,6 +20,7 @@ All public Classes, Functions, and Constants
     - [as\_done](/docs/api/modules/asyncpal/__init__/funcs.md#as_done): Yields futures iteratively as they are done
     - [collect](/docs/api/modules/asyncpal/__init__/funcs.md#collect): Collect the results of a sequence of futures. Beware, remote exceptions as well as CancelledError, or TimeoutError exceptions mi...
     - [get\_chunks](/docs/api/modules/asyncpal/__init__/funcs.md#get_chunks): Split an iterable into chunks
+    - [get\_remote\_traceback](/docs/api/modules/asyncpal/__init__/funcs.md#get_remote_traceback): Return the remote traceback string
     - [split\_map\_task](/docs/api/modules/asyncpal/__init__/funcs.md#split_map_task): Split a map task into subtasks that don't take any arguments. The iterables are chunked according to chunk_size.
     - [split\_starmap\_task](/docs/api/modules/asyncpal/__init__/funcs.md#split_starmap_task): Split a starmap task into subtasks that don't take any arguments. The iterable is chunked according to chunk_size.
     - [wait](/docs/api/modules/asyncpal/__init__/funcs.md#wait): Wait (blocking) for futures to get done (completed, failed, or cancelled).
@@ -40,7 +41,7 @@ All public Classes, Functions, and Constants
     - [check](/docs/api/modules/asyncpal/__init__/class-Countdown.md#check): Returns a new timeout value at each call
     - [get\_instant](/docs/api/modules/asyncpal/__init__/class-Countdown.md#get_instant): Returns an instant value
 - [**DualProcessPool**](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md): Fixed-size process pool. This pool can spawn up to 2 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md#fields-table) = `<_abc_data object at 0x7f710a1dca80>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md#fields-table) = `<_abc_data object at 0x7f7882637de0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md#properties-table); _getter_
@@ -112,7 +113,7 @@ All public Classes, Functions, and Constants
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/__init__/class-DualProcessPool.md#_update_future): No docstring.
 - [**DualThreadPool**](/docs/api/modules/asyncpal/__init__/class-DualThreadPool.md): Fixed-size thread pool. This pool can spawn up to 2 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-DualThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ed80>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-DualThreadPool.md#fields-table) = `<_abc_data object at 0x7f7882637120>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-DualThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-DualThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-DualThreadPool.md#properties-table); _getter_
@@ -228,7 +229,7 @@ All public Classes, Functions, and Constants
     - [args](/docs/api/modules/asyncpal/__init__/class-InvalidStateError.md#fields-table) = `<attribute 'args' of 'BaseException' objects>`
     - [with\_traceback](/docs/api/modules/asyncpal/__init__/class-InvalidStateError.md#fields-table) = `<method 'with_traceback' of 'BaseException' objects>`
 - [**Pool**](/docs/api/modules/asyncpal/__init__/class-Pool.md): Helper class that provides a standard way to create an ABC using inheritance.
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-Pool.md#fields-table) = `<_abc_data object at 0x7f710aaf8c90>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-Pool.md#fields-table) = `<_abc_data object at 0x7f7882f53c90>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-Pool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-Pool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-Pool.md#properties-table); _getter_
@@ -297,7 +298,7 @@ All public Classes, Functions, and Constants
     - [\_spawn\_workers](/docs/api/modules/asyncpal/__init__/class-Pool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-Pool.md#_submit_task): No docstring.
 - [**ProcessPool**](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md): The ProcessPool class for parallelism.
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md#fields-table) = `<_abc_data object at 0x7f710a1dc210>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md#fields-table) = `<_abc_data object at 0x7f7882637570>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md#properties-table); _getter_
@@ -369,7 +370,7 @@ All public Classes, Functions, and Constants
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/__init__/class-ProcessPool.md#_update_future): No docstring.
 - [**QuadProcessPool**](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md): Fixed-size process pool. This pool can spawn up to 4 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md#fields-table) = `<_abc_data object at 0x7f710a1dcc00>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md#fields-table) = `<_abc_data object at 0x7f7882637f60>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md#properties-table); _getter_
@@ -441,7 +442,7 @@ All public Classes, Functions, and Constants
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/__init__/class-QuadProcessPool.md#_update_future): No docstring.
 - [**QuadThreadPool**](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md): Fixed-size thread pool. This pool can spawn up to 4 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ef00>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#fields-table) = `<_abc_data object at 0x7f78826372a0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#properties-table); _getter_
@@ -509,12 +510,8 @@ All public Classes, Functions, and Constants
     - [\_spawn\_filter\_thread](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#_spawn_filter_thread): No docstring.
     - [\_spawn\_workers](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-QuadThreadPool.md#_submit_task): No docstring.
-- [**RemoteError**](/docs/api/modules/asyncpal/__init__/class-RemoteError.md): An object of this class is available on the __context__ attribute of any remote exception in a ProcessPool. This class has zero ...
-    - [args](/docs/api/modules/asyncpal/__init__/class-RemoteError.md#fields-table) = `<attribute 'args' of 'BaseException' objects>`
-    - [with\_traceback](/docs/api/modules/asyncpal/__init__/class-RemoteError.md#fields-table) = `<method 'with_traceback' of 'BaseException' objects>`
-    - [exc\_chain](/docs/api/modules/asyncpal/__init__/class-RemoteError.md#properties-table); _getter_
 - [**SingleProcessPool**](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md): Fixed-size process pool. This pool can spawn only 1 worker
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md#fields-table) = `<_abc_data object at 0x7f710a1dc780>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md#fields-table) = `<_abc_data object at 0x7f7882637ae0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md#properties-table); _getter_
@@ -586,7 +583,7 @@ All public Classes, Functions, and Constants
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/__init__/class-SingleProcessPool.md#_update_future): No docstring.
 - [**SingleThreadPool**](/docs/api/modules/asyncpal/__init__/class-SingleThreadPool.md): Fixed-size thread pool. This pool can spawn only 1 worker
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-SingleThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ecc0>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-SingleThreadPool.md#fields-table) = `<_abc_data object at 0x7f7882629810>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-SingleThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-SingleThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-SingleThreadPool.md#properties-table); _getter_
@@ -661,7 +658,7 @@ All public Classes, Functions, and Constants
     - FAILED = `4`
     - CANCELLED = `5`
 - [**ThreadPool**](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md): The ThreadPool class for  preemptive concurrency.
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44e510>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md#fields-table) = `<_abc_data object at 0x7f7882629870>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md#properties-table); _getter_
@@ -730,7 +727,7 @@ All public Classes, Functions, and Constants
     - [\_spawn\_workers](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-ThreadPool.md#_submit_task): No docstring.
 - [**TripleProcessPool**](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md): Fixed-size process pool. This pool can spawn up to 3 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md#fields-table) = `<_abc_data object at 0x7f710a1dcb40>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md#fields-table) = `<_abc_data object at 0x7f7882637ea0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md#properties-table); _getter_
@@ -802,7 +799,7 @@ All public Classes, Functions, and Constants
     - [\_submit\_task](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md#_submit_task): No docstring.
     - [\_update\_future](/docs/api/modules/asyncpal/__init__/class-TripleProcessPool.md#_update_future): No docstring.
 - [**TripleThreadPool**](/docs/api/modules/asyncpal/__init__/class-TripleThreadPool.md): Fixed-size thread pool. This pool can spawn up to 3 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-TripleThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ee40>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/__init__/class-TripleThreadPool.md#fields-table) = `<_abc_data object at 0x7f78826371e0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/__init__/class-TripleThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/__init__/class-TripleThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/__init__/class-TripleThreadPool.md#properties-table); _getter_

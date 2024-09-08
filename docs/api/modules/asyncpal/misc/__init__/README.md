@@ -15,6 +15,7 @@ Misc functions and classes.
 ## Functions
 - [**All functions**](/docs/api/modules/asyncpal/misc/__init__/funcs.md)
     - [get\_chunks](/docs/api/modules/asyncpal/misc/__init__/funcs.md#get_chunks): Split an iterable into chunks
+    - [get\_remote\_traceback](/docs/api/modules/asyncpal/misc/__init__/funcs.md#get_remote_traceback): Return the remote traceback string
     - [split\_map\_task](/docs/api/modules/asyncpal/misc/__init__/funcs.md#split_map_task): Split a map task into subtasks that don't take any arguments. The iterables are chunked according to chunk_size.
     - [split\_starmap\_task](/docs/api/modules/asyncpal/misc/__init__/funcs.md#split_starmap_task): Split a starmap task into subtasks that don't take any arguments. The iterable is chunked according to chunk_size.
 

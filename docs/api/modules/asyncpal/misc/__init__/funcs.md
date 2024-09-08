@@ -6,6 +6,7 @@
 
 Here are functions exposed in the module:
 - [get\_chunks](#get_chunks)
+- [get\_remote\_traceback](#get_remote_traceback)
 - [split\_map\_task](#split_map_task)
 - [split\_starmap\_task](#split_starmap_task)
 
@@ -24,6 +25,16 @@ def get_chunks(iterable, chunk_size):
 
 ### Value to return
 Returns an iterator
+
+<p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
+
+## get\_remote\_traceback
+Return the remote traceback string
+
+```python
+def get_remote_traceback(exc):
+    ...
+```
 
 <p align="right"><a href="#asyncpal-api-reference">Back to top</a></p>
 

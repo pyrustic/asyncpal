@@ -9,7 +9,7 @@ TripleThreadPool, and QuadThreadPool are defined here
 
 ## Classes
 - [**DualThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md): Fixed-size thread pool. This pool can spawn up to 2 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ed80>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#fields-table) = `<_abc_data object at 0x7f7882637120>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#properties-table); _getter_
@@ -78,7 +78,7 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-DualThreadPool.md#_submit_task): No docstring.
 - [**QuadThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md): Fixed-size thread pool. This pool can spawn up to 4 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ef00>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#fields-table) = `<_abc_data object at 0x7f78826372a0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#properties-table); _getter_
@@ -147,7 +147,7 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-QuadThreadPool.md#_submit_task): No docstring.
 - [**SingleThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md): Fixed-size thread pool. This pool can spawn only 1 worker
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ecc0>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#fields-table) = `<_abc_data object at 0x7f7882629810>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#properties-table); _getter_
@@ -216,7 +216,7 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-SingleThreadPool.md#_submit_task): No docstring.
 - [**ThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md): The ThreadPool class for  preemptive concurrency.
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44e510>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#fields-table) = `<_abc_data object at 0x7f7882629870>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#properties-table); _getter_
@@ -285,7 +285,7 @@ TripleThreadPool, and QuadThreadPool are defined here
     - [\_spawn\_workers](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_spawn_workers): No docstring.
     - [\_submit\_task](/docs/api/modules/asyncpal/pool/threadpool/class-ThreadPool.md#_submit_task): No docstring.
 - [**TripleThreadPool**](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md): Fixed-size thread pool. This pool can spawn up to 3 workers
-    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#fields-table) = `<_abc_data object at 0x7f710a44ee40>`
+    - [\_abc\_impl](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#fields-table) = `<_abc_data object at 0x7f78826371e0>`
     - [cancelled\_tasks](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [final\_args](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
     - [final\_kwargs](/docs/api/modules/asyncpal/pool/threadpool/class-TripleThreadPool.md#properties-table); _getter_
