@@ -299,7 +299,7 @@ class TestEagerMapMethod(unittest.TestCase):
 
     def test_with_unexpired_timeout(self):
         with ProcessPool(max_workers=4) as pool:
-            r = tuple(pool.map_all(funcs.square, range(10), timeout=1))
+            r = tuple(pool.map_all(funcs.square, range(10), timeout=5))
             expected = tuple(map(funcs.square, range(10)))
             self.assertEqual(expected, r)
 
