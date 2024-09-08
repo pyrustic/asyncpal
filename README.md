@@ -23,7 +23,7 @@
 - [Examples](#examples)
 - [Embarrassingly parallel workloads](#embarrassingly-parallel-workloads)
 - [Initializers, finalizers, and the BrokenPoolError exception](#initializers-finalizers-and-the-brokenpoolerror-exception)
-- [The peculiar case of daemons](#the-peculiar-case-of-daemons)
+- [The peculiar cases of daemons and remote exceptions](#the-peculiar-cases-of-daemons-and-remote-exceptions)
 - [Application programming interface](#application-programming-interface)
     - [ThreadPool class](#threadpool-class)
     - [ProcessPool class](#processpool-class)
@@ -226,7 +226,10 @@ Any exception raised during initialization, finalization, or in between will be 
 
 Asyncpal offers a way to reduce the risk of encountering a `BrokenPoolError` exception at an inconvenient time by testing the pool beforehand. All pool classes provide a `test` method that replicate the pool with its configuration, perform some computation on it, then close it, letting any exception propagate to the top.
 
-# The peculiar case of daemons
+# The peculiar cases of daemons and remote exceptions
+This section discusses the peculiar cases of daemons and remote exceptions.
+
+## The peculiar case of daemons
 In Python, a thread can be flagged as a [daemon thread](https://docs.python.org/3/library/threading.html#thread-objects). The significance of this flag is that the entire Python program exits when only daemon threads are left.
 
 Prior to **Python 3.9**, `concurrent.futures` used daemon threads as workers for its thread pool and relied on [atexit](https://docs.python.org/3/library/atexit.html) hooks to gracefully shut down the pools that had not been explicitly closed. For compatibility with subinterpreters, which do not support daemon threads, it was decided to [remove the daemon flag](https://docs.python.org/3/whatsnew/3.9.html#concurrent-futures). However, simply removing the daemon flag would have been [problematic](https://bugs.python.org/issue37266#msg362890). 
@@ -234,6 +237,18 @@ Prior to **Python 3.9**, `concurrent.futures` used daemon threads as workers for
 The fix for this issue involved stopping the use of atexit hooks and instead relying on an [internal threading atexit hook](https://bugs.python.org/issue37266#msg362960). Asyncpal does not use the daemon flag either. Instead of relying on some internal Python function that might disappear without warning, it implements its own workaround. This workaround involves a single thread for the entire program, started by `asyncpal.pool.GlobalShutdown`, whose job is to join the main thread and, once joined, run the shutdown handlers registered by the pools. 
 
 > Feel free to open an issue to criticize this workaround or to suggest a better idea.
+
+## The peculiar case of remote exceptions
+An exception raised in a worker of a `ProcessPool` must go through a multiprocessing queue to reach the pool instance. To be placed in a multiprocessor queue, a Python object must be **picklable**, that is, it must be possible to [serialize](https://en.wikipedia.org/wiki/Serialization) it with Python's [pickle](https://docs.python.org/3/library/pickle.html) mechanism.
+
+An exception instance typically contains a traceback object that is not picklable and thus nullified by the `pickle` mechanism. Python's `concurrent.futures` and `multiprocessing.pool.Pool` use a hack that stringifies traceback to move it from the worker process to the main pool process.
+
+Although this hack is interesting and useful for debugging a `ProcessPool`, it does not preserve the chain of exceptions because the `pickling` process not only nullifies the `__traceback__` attribute of the exception object, but also the `__cause__` and `__context__` attributes.
+
+Asyncpal also stringifies the traceback, as it is a simpler solution than recreating the traceback object in the main process. Additionally, Asyncpal replicates the exception chain, so the programmer can navigate through the `__cause__` and `__context__` attributes of a remote exception.
+
+> The `get_remote_traceback` function is exposed to quickly extract the traceback string of a remote exception.
+
 
 # Application programming interface
 > This section describes the API and refers to the API reference for more details.
