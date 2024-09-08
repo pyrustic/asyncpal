@@ -28,8 +28,7 @@ class TestWorkers(unittest.TestCase):
             with self.assertRaises(errors.BrokenPoolError):
                 pool.test()
             worker_exception = funcs.get_worker_exception(pool)
-            remote_exc = worker_exception.__context__
-            first_cause = remote_exc.exc_chain[0]
+            first_cause = worker_exception.__cause__
             self.assertIsInstance(first_cause, ZeroDivisionError)
 
 
@@ -46,8 +45,8 @@ class TestBrokenPool(unittest.TestCase):
             worker_exception = funcs.get_worker_exception(pool)
             self.assertIsInstance(worker_exception, errors.InitializerError)
             self.assertIsInstance(worker_exception, errors.BrokenPoolError)
-            remote_error = worker_exception.__context__
-            self.assertIsInstance(remote_error.exc_chain[0], ZeroDivisionError)
+            first_cause = worker_exception.__cause__
+            self.assertIsInstance(first_cause, ZeroDivisionError)
             self.assertTrue(pool.is_broken)
 
     def test_after_shutdown_with_pool_broken_by_initializer(self):
@@ -75,8 +74,8 @@ class TestBrokenPool(unittest.TestCase):
             worker_exception = funcs.get_worker_exception(pool)
             self.assertIsInstance(worker_exception, errors.FinalizerError)
             self.assertIsInstance(worker_exception, errors.BrokenPoolError)
-            remote_error = worker_exception.__context__
-            self.assertIsInstance(remote_error.exc_chain[0], ZeroDivisionError)
+            first_cause = worker_exception.__cause__
+            self.assertIsInstance(first_cause, ZeroDivisionError)
             self.assertTrue(pool.is_broken)
 
     def test_after_shutdown_with_pool_broken_by_finalizer(self):
@@ -95,8 +94,8 @@ class TestBrokenPool(unittest.TestCase):
             pool.spawn_workers(1)
             pool.join()
             worker_exception = funcs.get_worker_exception(pool)
-            remote_error = worker_exception.__context__
-            self.assertIsInstance(remote_error.exc_chain[0], TypeError)
+            first_cause = worker_exception.__cause__
+            self.assertIsInstance(first_cause, TypeError)
             self.assertTrue(pool.is_broken)
 
 

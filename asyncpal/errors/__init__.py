@@ -5,21 +5,21 @@ class Error(Exception):
     pass
 
 
-class RemoteError(Error):
-    """An object of this class is available on the
-     __context__ attribute of any remote exception
-     in a ProcessPool. This class has zero link with ThreadPool.
+class RemoteTraceback(Error):
+    """An instance of this class is available on the
+     __context__ attribute of the last remote exception in an
+     exception chain that occurred in a ProcessPool.
      """
-    def __init__(self, traceback_str, exc_chain):
-        self._traceback_str = traceback_str
-        self._exc_chain = tuple(exc_chain) if exc_chain else tuple()
-    
+    def __init__(self, traceback_lines):
+        self._traceback_lines = traceback_lines
+
     @property
-    def exc_chain(self):
-        return self._exc_chain
-    
+    def traceback_lines(self):
+        return self._traceback_lines
+
     def __str__(self):
-        return self._traceback_str
+        tbs = "".join(self._traceback_lines)
+        return '\n"""\n{}"""'.format(tbs)
 
 
 class InvalidStateError(Error):

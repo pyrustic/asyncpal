@@ -5,13 +5,15 @@ import time
 import itertools
 import functools
 import logging
+from copy import copy
 from traceback import format_exception
 from queue import Empty as EmptyQueueError
 from asyncpal import errors
 
 
 __all__ = ["split_map_task", "split_starmap_task",
-           "get_chunks", "Countdown", "LOGGER"]
+           "get_chunks", "get_remote_traceback",
+           "Countdown", "LOGGER"]
 
 
 LOGGER = logging.getLogger("asyncpal")
@@ -147,39 +149,67 @@ def _subtask(target, chunk):
     return [target(*args) for args in chunk]
 
 
-class ExceptionWrapper:
-    def __init__(self, exc, tb=None):
-        self._exc = exc
-        tb = exc.__traceback__ if tb is None else tb
-        # traceback string
-        tbs = "".join(format_exception(type(exc), exc, tb))
-        self._traceback_str = '\n"""\n{}"""'.format(tbs)
-        # traceback objects hold references to exception frames
-        # therefore, let's clear them
-        exc.__traceback__ = None
-
-    def _get_exc_chain(self):
-        result = list()
-        exc = self._exc
-        while exc is not None:
-            exc.__traceback__ = None
-            cause = exc.__cause__
-            if cause is None:
-                if exc.__suppress_context__:
-                    break
-                else:
-                    cause = exc.__context__
-            if cause is None:
-                break
-            result.append(cause)
+def get_remote_traceback(exc):
+    """Return the remote traceback string"""
+    while True:
+        cause, context = exc.__cause__, exc.__context__
+        if cause is None and context is None:
+            return
+        if isinstance(context, errors.RemoteTraceback):
+            traceback_str = "".join(context.traceback_lines)
+            return traceback_str.strip()
+        if cause is not None:
             exc = cause
-        return tuple(result)
+        elif context is not None:
+            exc = context
+        else:
+            return
 
-    def __reduce__(self):
-        exc_chain = self._get_exc_chain()
-        return _update_exc, (self._exc, self._traceback_str, exc_chain)
+
+class RemoteExceptionWrapper:
+    def __init__(self, exc):
+        self._exc = exc
+        # get exc chain
+        self._exc_chain = get_exc_chain(exc)
+        # get traceback string
+        self._traceback_lines = format_exception(type(exc), exc, exc.__traceback__)
+
+    @property
+    def exc_chain(self):
+        return self._exc_chain
+
+    def unwrap(self):
+        last_exc, _ = self._exc_chain[-1]
+        last_exc.__context__ = errors.RemoteTraceback(self._traceback_lines)
+        exc = None
+        last_exc = None
+        has_cause = None
+        for x, y in self._exc_chain:
+            if exc is None:
+                exc = last_exc = x
+                has_cause = y
+                continue
+            if has_cause:
+                last_exc.__cause__ = x
+            else:
+                last_exc.__context__ = x
+            last_exc = x
+            has_cause = y
+        return exc
 
 
-def _update_exc(exc, traceback_str, exc_chain):
-    exc.__context__ = errors.RemoteError(traceback_str, exc_chain)
-    return exc
+def get_exc_chain(exc):
+    exc_chain = list()
+    while exc is not None:
+        cause = exc.__cause__
+        context = None if exc.__suppress_context__ else exc.__context__
+        has_cause = False if cause is None else True
+        exc_info = (copy(exc), has_cause)
+        exc_chain.append(exc_info)
+        if cause is not None:
+            exc = cause
+        elif context is not None:
+            exc = context
+        else:
+            exc = None
+    return exc_chain

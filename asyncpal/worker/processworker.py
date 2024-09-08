@@ -84,8 +84,9 @@ def runner(worker_id, worker_name, task_queue, message_queue, idle_timeout,
     except BaseException as e:
         misc.LOGGER.critical("Exception in worker", exc_info=True)
         is_busy_event.clear()
-        e = misc.ExceptionWrapper(e, e.__traceback__)
-        msg = (MessageTag.WORKER_EXCEPTION, worker_id, e)  # WORKER ERROR
+        exc = misc.RemoteExceptionWrapper(e)
+        e.__traceback__ = e.__cause__ = e.__context__ = None
+        msg = (MessageTag.WORKER_EXCEPTION, worker_id, exc)  # WORKER ERROR
         message_queue.put(msg)
     else:
         is_busy_event.clear()
@@ -124,8 +125,9 @@ def run_task(task, message_queue):
         result = target(*args, **kwargs)
     except BaseException as e:
         # SET EXCEPTION
-        e = misc.ExceptionWrapper(e, e.__traceback__)
-        msg = (MessageTag.EXCEPTION, task_id, e,
+        exc = misc.RemoteExceptionWrapper(e)
+        e.__traceback__ = e.__cause__ = e.__context__ = None
+        msg = (MessageTag.EXCEPTION, task_id, exc,
                time.monotonic())
         message_queue.put(msg)
     else:

@@ -3,6 +3,7 @@ import sys
 import unittest
 import time
 import itertools
+from traceback import format_exception
 from queue import Queue
 from asyncpal import misc, errors
 from asyncpal.pool import MP_CONTEXT
@@ -229,36 +230,79 @@ class TestCpuCount(unittest.TestCase):
         self.assertEqual(cpu_count, misc.get_cpu_count())
 
 
-class TestExceptionWrapper(unittest.TestCase):
+class TestFunctionGetRemoteTraceback(unittest.TestCase):
 
-    def test(self):
+    def setUp(self):
         try:
             try:
                 try:
                     try:
                         raise Exception("d")
                     except Exception as e:
-                        raise Exception("c") from e
+                        raise Exception("c")
                 except Exception as e:
                     raise Exception("b") from e
             except Exception as e:
                 raise Exception("a") from e
         except Exception as e:
-            exc = e
-        wrapped_exc = misc.ExceptionWrapper(exc)
-        func, args = wrapped_exc.__reduce__()
-        reduced_exc = func(*args)
-        # the remote traceback is available as a string when you
-        # apply 'str' built-in function on the instance of RemoteError
-        remote_error_instance = reduced_exc.__context__
-        self.assertIsInstance(str(remote_error_instance), str)
-        self.assertEqual("a", str(reduced_exc))
-        self.assertIsInstance(reduced_exc.__context__, errors.RemoteError)
-        exc_chain = reduced_exc.__context__.exc_chain
-        self.assertEqual(3, len(exc_chain))
-        self.assertEqual("b", str(exc_chain[0]))
-        self.assertEqual("c", str(exc_chain[1]))
-        self.assertEqual("d", str(exc_chain[2]))
+            self._exc = e
+            self._exc_wrapper = misc.RemoteExceptionWrapper(e)
+
+    def test(self):
+        self.assertIsNone(misc.get_remote_traceback(self._exc))
+        exc = self._exc_wrapper.unwrap()
+        x = format_exception(type(self._exc), self._exc,
+                             self._exc.__traceback__)
+        x = "".join(x).strip()
+        self.assertEqual(x, misc.get_remote_traceback(exc))
+
+
+class TestRemoteExceptionWrapper(unittest.TestCase):
+
+    def setUp(self):
+        try:
+            try:
+                try:
+                    try:
+                        raise Exception("d")
+                    except Exception as e:
+                        raise Exception("c")
+                except Exception as e:
+                    raise Exception("b") from e
+            except Exception as e:
+                raise Exception("a") from e
+        except Exception as e:
+            self._exc = e
+            self._exc_wrapper = misc.RemoteExceptionWrapper(e)
+
+    def test_exc_chain_length(self):
+        exc_chain = self._exc_wrapper.exc_chain
+        self.assertEqual(4, len(exc_chain))
+
+    def test_exc_chain(self):
+        exc_chain = self._exc_wrapper.exc_chain
+        exc_a, exc_a_has_cause = exc_chain[0]
+        exc_b, exc_b_has_cause = exc_chain[1]
+        exc_c, exc_c_has_cause = exc_chain[2]
+        exc_d, exc_d_has_cause = exc_chain[3]
+        self.assertEqual("a", str(exc_a))
+        self.assertEqual("b", str(exc_b))
+        self.assertEqual("c", str(exc_c))
+        self.assertEqual("d", str(exc_d))
+        self.assertTrue(exc_a_has_cause)
+        self.assertTrue(exc_b_has_cause)
+        self.assertFalse(exc_c_has_cause)
+        self.assertFalse(exc_d_has_cause)
+
+    def test_unwrap_method(self):
+        exc = self._exc_wrapper.unwrap()
+        self.assertEqual(str(self._exc), str(exc))
+        self.assertEqual(str(self._exc.__cause__), str(exc.__cause__))
+        self.assertEqual(str(self._exc.__cause__.__cause__), str(exc.__cause__.__cause__))
+        self.assertEqual(str(self._exc.__cause__.__cause__.__context__),
+                         str(exc.__cause__.__cause__.__context__))
+        last_exc = exc.__cause__.__cause__.__context__
+        self.assertIsInstance(last_exc.__context__, errors.RemoteTraceback)
 
 
 if __name__ == "__main__":

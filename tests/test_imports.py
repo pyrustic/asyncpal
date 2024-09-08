@@ -27,6 +27,7 @@ class TestImports(unittest.TestCase):
             from asyncpal import split_map_task
             from asyncpal import split_starmap_task
             from asyncpal import get_chunks
+            from asyncpal import get_remote_traceback
             # import constants
             from asyncpal import IDLE_TIMEOUT
             from asyncpal import MP_CONTEXT
@@ -34,7 +35,6 @@ class TestImports(unittest.TestCase):
             from asyncpal import WINDOWS_MAX_PROCESS_WORKERS
             # import errors
             from asyncpal import Error
-            from asyncpal import RemoteError
             from asyncpal import BrokenPoolError
             from asyncpal import InitializerError
             from asyncpal import FinalizerError

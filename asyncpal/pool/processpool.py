@@ -103,8 +103,9 @@ class ProcessPool(Pool):
                 elif tag == MessageTag.SHUTDOWN:
                     self._on_worker_shutdown(message[1])
                 elif tag == MessageTag.WORKER_EXCEPTION:
-                    worker_id, exception = message[1:]
-                    self._on_worker_exception(worker_id, exception)
+                    worker_id, exc_wrapper = message[1:]
+                    exc = exc_wrapper.unwrap()
+                    self._on_worker_exception(worker_id, exc)
                 else:
                     msg = "Invalid message tag: {}".format(tag)
                     e = errors.Error(msg)
@@ -131,8 +132,9 @@ class ProcessPool(Pool):
             result, instant = message[2:]
             future.set_result(result, instant)
         elif tag == MessageTag.EXCEPTION:
-            exception, instant = message[2:]
-            future.set_exception(exception, instant)
+            exc_wrapper, instant = message[2:]
+            exc = exc_wrapper.unwrap()
+            future.set_exception(exc, instant)
         if tag in (MessageTag.RESULT, MessageTag.EXCEPTION):
             with self._futures_lock:
                 del self._stored_futures[task_id]
