@@ -308,7 +308,7 @@ except BrokenPoolError:
   pass
 
 # calling this will raise RuntimeError if the pool is closed
-# or BrokenPoolError (or its subclass)
+# or BrokenPoolError (or its subclass) if the pool is broken
 pool.check()
 
 # retrieve useful data
