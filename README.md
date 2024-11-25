@@ -415,7 +415,7 @@ Feel free to **open an issue** to report a bug, suggest some changes, show some 
 Following are instructions to setup your development environment
 
 ```bash
-# create and activate a virtual environmentb
+# create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate
 
