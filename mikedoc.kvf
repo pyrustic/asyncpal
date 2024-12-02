@@ -5,7 +5,7 @@ project_name = 'Asyncpal'
 project_url = '/README.md'
 
 # package directory (relative path)
-pkg_dir = 'asyncpal'
+pkg_dir = 'src/asyncpal'
 
 # API directory (relative path)
 api_dir = 'docs/api'

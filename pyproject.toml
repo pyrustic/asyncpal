@@ -1,54 +1,8 @@
+# https://stackoverflow.com/q/76248637 (this is why setup.cfg/setup.py are still relevant !)
 # https://packaging.python.org/en/latest/guides/writing-pyproject-toml
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 # https://setuptools.pypa.io/en/latest/userguide/datafiles.html
 
-[project]
-name = "asyncpal"
-description = "Preemptive concurrency and parallelism for sporadic workloads"
-readme = "README.md"
-authors = [
-    {name = "Pyrustic Architect", email = "rusticalex@yahoo.com"},
-]
-maintainers = [
-    {name = "Pyrustic Architect", email = "rusticalex@yahoo.com"},
-]
-license = {file = "LICENSE"}
-keywords = [
-]
-# https://pypi.org/classifiers/ 
-classifiers = [
-    #"Development Status :: 3 - Alpha"
-    #"Development Status :: 4 - Beta"
-    #"Development Status :: 5 - Production/Stable"
-    "Development Status :: 4 - Beta",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Intended Audience :: Developers",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-]
-requires-python = ">= 3.8"
-dependencies = [
-]
-
-dynamic = ["version"]
-
-[project.urls]
-Homepage = "https://github.com/pyrustic/asyncpal"
-
-[project.scripts]
-asyncpal = "asyncpal.__main__:main"
-
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.dynamic]
-version.file = "VERSION"
-
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-
